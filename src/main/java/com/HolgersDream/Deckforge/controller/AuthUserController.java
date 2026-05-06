@@ -41,6 +41,13 @@ public class AuthUserController {
         return "authentication/login";
     }
 
+    @PostMapping("/authentication/login")
+    public String tryToLogin(@ModelAttribute AuthRequest authRequest, HttpSession session){
+        AuthSessionUser loggedIn = service.checkLogin(authRequest);
+        session.setAttribute("currentUser", loggedIn);
+        return "redirect:/welcome";
+    }
+
 
 
     @GetMapping("/welcome")

@@ -29,5 +29,12 @@ public class GlobalExceptionHandler {
         return "error";
     }
 
+    @ExceptionHandler(LoginValidationException.class)
+    public String handleLoginValidation(LoginValidationException lve, Model model){
+        model.addAttribute("type", "ugyldigt login");
+        model.addAttribute("errorMessage", lve.getMessage());
+        return "error";
+    }
+
 
 }
