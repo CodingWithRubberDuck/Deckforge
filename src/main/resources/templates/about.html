@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Deckforge</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <meta name="description" content="Deckforge Hjemmeside">
+    <meta name="keywords" content="Magic, Magic the Gathering, Magic: The Gathering, MTG, MtG, mtg, Deckforge">
+    <meta name="author" content="???">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<body>
+
+<header class="standard-header">
+    <img id="logo" src="/images/deckforge-logo.png" alt="Billede af logo">
+    <h1>About us</h1>
+</header>
+
+
+<nav
+        th:insert="~{fragments/pre-navbar :: pre-navbar}">
+</nav>
+
+
+<main class="standard-main">
+
+    <article class="about-main-article">
+
+        <h2>Lær mere om os!</h2>
+        <p>Vi er en lokal kæde af spilbutikker baseret i Næstved, og dette er vores forsøg
+            på at lave en side hvor andre Magic The Gathering fans kan samles
+            og skabe et fællesskab om det spil vi alle elsker.
+        </p>
+        <br>
+        <h2>Lær mere om vores side!</h2>
+        <p>Vores hjemmeside kan hjælpe dig med at skabe et overblik over din private samling af kort
+        og du kan melde dig til fede turneringer hvor du kan møde andre Magic The Gathering fans.</p>
+        <br>
+        <h2>Hvor kan du finde os?</h2>
+        <p>Mosevænget 42, 4700 Næstved</p>
+
+    </article>
+
+</main>
+
+
+<footer class="standard-footer">
+    <p>&copy; 2026 Holger  •<a href="/about">About Us</a></p>
+</footer>
+
+
+</body>
+
+
+</html>

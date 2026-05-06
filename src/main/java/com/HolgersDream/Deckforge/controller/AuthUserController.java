@@ -34,7 +34,6 @@ public class AuthUserController {
         return "redirect:/authentication/login";
     }
 
-
     @GetMapping("/authentication/login")
     public String showLoginForm(Model model){
         model.addAttribute("auth", new AuthRequest());
@@ -47,8 +46,6 @@ public class AuthUserController {
         session.setAttribute("currentUser", loggedIn);
         return "redirect:/welcome";
     }
-
-
 
     @GetMapping("/welcome")
     public String showWelcome(HttpSession session, Model model){
@@ -65,4 +62,8 @@ public class AuthUserController {
         return "redirect:/";
     }
 
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
 }

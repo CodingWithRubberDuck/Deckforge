@@ -22,8 +22,18 @@ body {
 	background: linear-gradient(90deg, #262626, #121212);
 	color: white;
 	text-align: center;
-	padding: 2rem 1rem;
+	padding: 2.5rem 1rem;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+	position: relative;
+	height: 120px;
+}
+
+#logo {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	width: 7.5%;
+	height: auto;
 }
 
 
@@ -75,6 +85,26 @@ ul li a:hover {
 	color: #fff;
 }
 
+.about-main-article {
+	flex: 3 1 600px;
+	background-color: #212121;
+	padding: 2rem;
+	padding-bottom: 6rem;
+	border-radius: 10px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+	color: #fff;
+}
+
+.about-main-article h2 {
+	color: #9FC5FF;
+}
+
+.about-main-article p {
+	max-width: 600px;
+	margin: 0 auto;
+	text-align: center;
+}
+
 input {
 	width: 300px;
 	height: 50px;
@@ -114,6 +144,17 @@ input {
 	background-color: #212121;
 	color: white;
 	margin-top: 2rem;
+}
+
+.standard-footer a {
+	color: #9FC5FF;
+	text-decoration: none;
+	margin-left: 0.5rem;
+}
+
+.standard-footer a:hover {
+	color: #D9D9D9;
+	text-decoration: underline;
 }
 
 
