@@ -13,11 +13,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
+
 <body>
-    <header>
 
+    <header class="standard-header">
+        <h1>Log Ind Side</h1>
     </header>
-
 
 
     <nav
@@ -25,10 +26,14 @@
     </nav>
 
 
+    <main class="standard-main">
 
-    <main>
+        <article class="standard-main-article">
 
-        <section>
+            <h2>Log ind</h2>
+            <p>Indtast den relevante information, og klik på knappen:</p>
+            <br>
+
             <form th:action="@{/authentication/login}" method="post" th:object="${auth}">
                 <label for="email">Indtast email </label><br>
                 <input type="email" id="email" th:field="*{email}" placeholder="JegElskerKatte@gmail.com" required><br><br>
@@ -36,16 +41,15 @@
                 <input type="password" id="password" th:field="*{password}" required><br><br>
 
 
-                <button type="submit" >Prøv</button>
+                <button type="submit" class="standard-button" >Prøv</button>
 
             </form>
-        </section>
+        </article>
 
     </main>
 
 
-
-    <footer>
+    <footer class="standard-footer">
         <p>&copy; 2026 Holger </p>
     </footer>
 

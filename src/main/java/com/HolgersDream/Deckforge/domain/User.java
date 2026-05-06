@@ -80,7 +80,7 @@ public class User {
 
 
 
-    //Getters
+    /// Getters
     public int getUserId(){
         return userId;
     }
