@@ -1,0 +1,4 @@
+package com.HolgersDream.Deckforge.domain.interfaces;
+
+public interface IUserRepository {
+}

@@ -5,58 +5,95 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private String role;
+    private Role role;
 
-    public User() {
-    }
 
-    public User(int userId, String name, String email, String password, String role) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    //Base Chain Constructor kald
+    private User(String name, String email, Role role){
+        if (name == null || name.isBlank()){
+            throw new IllegalArgumentException("Brugeren har ikke et gyldigt navn");
+        }
+        this.name = name.trim();
+
+        if (email == null || email.isBlank()){
+            throw new IllegalArgumentException("Brugeren har ikke en gyldig email");
+        }
+        this.email = email.trim();
+
+        if (role == null){
+            throw new IllegalArgumentException("Brugeren har ikke en gyldig rolle");
+        }
         this.role = role;
     }
 
-    /// Getters
-    public int getUserId() {
+
+
+    //Konstruktør med alle værdier
+    public User(int userId, String name, String email, String password, Role role) {
+        //Chain constructor kald
+        this(name, email, role);
+
+        if (userId < 1){
+            throw new IllegalArgumentException("Brugeren har ikke et gyldigt id");
+        }
+        this.userId = userId;
+
+        if (password == null || password.isBlank()){
+            throw new IllegalArgumentException("Brugeren har ikke et gyldigt kodeord");
+        }
+        this.password = password;
+    }
+
+
+
+    //Konstruktør uden Id
+    public User(String name, String email, String password, Role role){
+        //Chain constructor kald
+        this(name, email, role);
+
+        if (password == null || password.isBlank()){
+            throw new IllegalArgumentException("Brugeren har ikke et gyldigt kodeord");
+        }
+        this.password = password;
+    }
+
+
+    //Konstruktør uden Kodeord
+    public User(int userId, String name, String email, Role role){
+        //Chain constructor kald
+        this(name, email, role);
+
+        if (userId < 1){
+            throw new IllegalArgumentException("Brugeren har ikke et gyldigt id");
+        }
+        this.userId = userId;
+    }
+
+    // Change with rules
+    public void changePassword(String newPassword){
+        if (newPassword == null || newPassword.isBlank()){
+            throw new IllegalArgumentException();
+        }
+        this.password = newPassword;
+    }
+
+
+
+
+    //Getters
+    public int getUserId(){
         return userId;
     }
-
-    public String getName() {
+    public String getName(){
         return name;
     }
-
-    public String getEmail() {
+    public String getEmail(){
         return email;
     }
-
     public String getPassword() {
         return password;
     }
-
-    public String getRole() {
+    public Role getRole(){
         return role;
-    }
-
-    /// Setters
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }
