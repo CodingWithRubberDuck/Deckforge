@@ -22,17 +22,21 @@ body {
 	background: linear-gradient(90deg, #262626, #121212);
 	color: white;
 	text-align: center;
-	padding: 2.5rem 1rem;
+	padding: 1.5rem;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 	position: relative;
-	height: 120px;
+	height: 100px;
+}
+
+.standard-header h1 {
+	font-size: 1.7rem;
 }
 
 #logo {
 	position: absolute;
-	top: 1rem;
+	top: 0.5rem;
 	left: 1rem;
-	width: 7.5%;
+	width: 6%;
 	height: auto;
 }
 
@@ -46,15 +50,18 @@ ul {
 	padding: 0;
 	background-color: #212121;
 	display: flex;
+	flex-wrap: wrap;
 	border: #4D4D4D 1px solid;
+	border-radius: 5px;
 }
 
 ul li a {
 	display: block;
 	color: white;
-	padding: 14px 16px;
+	padding: 14px 5rem;
 	text-decoration: none;
-	border: #4D4D4D 1px solid;
+	border: #787878 1px solid;
+	border-radius: 8px;
 }
 
 ul li a:hover {
@@ -118,7 +125,7 @@ input {
 .standard-button {
 	background-color: #092F6E;
 	color: white;
-	padding: 0.8rem 1.5rem;
+	padding: 1.5rem 3rem;
 	border: #D9D9D9 1px solid;
 	border-radius: 8px;
 	cursor: pointer;
