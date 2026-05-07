@@ -34,6 +34,13 @@
             <p>Indtast den relevante information, og klik på knappen:</p>
             <br>
 
+            <!--Viser kun fejlmeddelse/border hvis den ikke er tom eller null -->
+            <section class="standard-warning-message" th:if="${responseMessage != null and !#strings.isEmpty(responseMessage)}">
+                <p th:text="${responseMessage}"></p>
+            </section>
+
+            <br>
+
             <form th:action="@{/authentication/register}" method="post" th:object="${auth}">
                 <label for="name">Indtast navn </label><br>
                 <input type="text" id="name" th:field="*{name}" placeholder="Frank" required><br><br>

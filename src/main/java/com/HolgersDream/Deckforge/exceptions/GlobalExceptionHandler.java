@@ -3,6 +3,7 @@ package com.HolgersDream.Deckforge.exceptions;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,17 +24,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RegisterValidationException.class)
-    public String handleRegisterValidation(RegisterValidationException rve, Model model){
-        model.addAttribute("type", "Ugyldig registrering");
-        model.addAttribute("errorMessage", rve.getMessage());
-        return "error";
+    public String handleRegisterValidation(RegisterValidationException rve, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", rve.getMessage());
+        return "redirect:/authentication/register";
     }
 
     @ExceptionHandler(LoginValidationException.class)
-    public String handleLoginValidation(LoginValidationException lve, Model model){
-        model.addAttribute("type", "ugyldigt login");
-        model.addAttribute("errorMessage", lve.getMessage());
-        return "error";
+    public String handleLoginValidation(LoginValidationException lve, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", lve.getMessage());
+        return "redirect:/authentication/login";
     }
 
 

@@ -34,6 +34,11 @@
             <h2>Log ind</h2>
             <p>Indtast den relevante information, og klik på knappen:</p>
             <br>
+            <!--Viser kun fejlmeddelse/border hvis den ikke er tom eller null -->
+            <section class="standard-warning-message" th:if="${responseMessage != null and !#strings.isEmpty(responseMessage)}">
+                <p th:text="${responseMessage}"></p>
+            </section>
+            <br>
 
             <form th:action="@{/authentication/login}" method="post" th:object="${auth}">
                 <label for="email">Indtast email </label><br>

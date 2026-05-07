@@ -132,6 +132,14 @@ input {
 }
 
 
+.standard-warning-message p {
+    padding: 0.8rem 1.5rem;
+    border: #6B6767 1px solid;
+    background-color: #b30e0e;
+    border-radius: 8px;
+}
+
+
 
 /* Footer definitioner */
 .standard-footer {
