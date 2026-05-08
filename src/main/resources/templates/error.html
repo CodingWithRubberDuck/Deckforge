@@ -18,14 +18,19 @@
     <header class="standard-header">
 
         <h1 id="error-title">Ups noget gik galt</h1>
-        <h2 th:text="${type}"></h2>
 
     </header>
 
     <main class="standard-main">
 
         <article class="standard-main-article">
+            <h2 th:text="${type}"></h2>
+            <br>
             <p th:text="${errorMessage}"></p>
+            <br>
+            <form action="/return" method="get">
+                <button type="submit" class="standard-button" >Gå tilbage</button>
+            </form>
         </article>
 
     </main>

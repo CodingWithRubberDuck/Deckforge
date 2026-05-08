@@ -66,4 +66,14 @@ public class AuthUserController {
     public String about() {
         return "about";
     }
+
+    @GetMapping("/return")
+    public String returnBack(HttpSession session) {
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null){
+            return "redirect:/";
+        } else {
+            return "redirect:/welcome";
+        }
+    }
 }
