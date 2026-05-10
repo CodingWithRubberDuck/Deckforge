@@ -14,10 +14,13 @@
 </head>
 
 <body>
-    <header class="standard-header">
-        <img id="logo" src="/images/deckforge-logo.png" alt="Billede af logo">
-        <h1>Her kan du lave en konto</h1>
-    </header>
+<header class="standard-header">
+    <a href="/return">
+        <img class="logo" src="/images/deckforge-logo.png" alt="Billede af logo" href="/return">
+    </a>
+    <h1>Her er Registrering</h1>
+</header>
+
 
 
     <nav
@@ -57,8 +60,8 @@
     </main>
 
 
-    <footer class="standard-footer">
-        <p>&copy; 2026 Holger  •<a href="/about">About Us</a></p>
+    <footer class="standard-footer"
+            th:insert="~{fragments/footer :: footer}">
     </footer>
 
 

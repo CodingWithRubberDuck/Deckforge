@@ -16,14 +16,17 @@
 
 <body>
 
-    <header class="standard-header">
-        <img id="logo" src="/images/deckforge-logo.png" alt="Billede af logo">
-        <h1>Log Ind Side</h1>
-    </header>
+<header class="standard-header">
+    <a href="/return">
+        <img class="logo" src="/images/deckforge-logo.png" alt="Billede af logo" href="/return">
+    </a>
+    <h1>Her er Login</h1>
+</header>
+
 
 
     <nav
-            th:insert="~{fragments/pre-navbar :: pre-navbar}">
+        th:insert="~{fragments/pre-navbar :: pre-navbar}">
     </nav>
 
 
@@ -55,8 +58,8 @@
     </main>
 
 
-    <footer class="standard-footer">
-        <p>&copy; 2026 Holger  •<a href="/about">About Us</a></p>
+    <footer class="standard-footer"
+            th:insert="~{fragments/footer :: footer}">
     </footer>
 
 

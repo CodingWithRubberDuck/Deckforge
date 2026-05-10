@@ -14,9 +14,8 @@
 </head>
 
 <body>
-    <header class="standard-header">
-        <img id="logo" src="/images/deckforge-logo.png" alt="Billede af logo">
-        <h1>Deckforge</h1>
+    <header class="standard-header"
+            th:replace="~{fragments/header :: header}">
     </header>
 
 
@@ -37,8 +36,8 @@
 
 
 
-    <footer class="standard-footer">
-        <p>&copy; 2026 Holger  •<a href="/about">About Us</a></p>
+    <footer class="standard-footer"
+            th:insert="~{fragments/footer :: footer}">
     </footer>
 
 

@@ -2,10 +2,20 @@
 
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<ul th:fragment="pre-navbar">
-    <li><a href="/">Startside</a></li>
-    <li><a href="/authentication/register">Registrering</a></li>
-    <li><a href="/authentication/login">Log ind</a></li>
-</ul>
+<nav class="nav-container" th:fragment="pre-navbar">
+    <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+    <label for="menu-toggle" class="burger" aria-label="Åbn menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+    <article class="standard-nav">
+        <ul class="nav-list">
+            <li><a href="/">Startside</a></li>
+            <li><a href="/authentication/register">Registrering</a></li>
+            <li><a href="/authentication/login">Log ind</a></li>
+        </ul>
+    </article>
+</nav>
 
 </html>

@@ -21,24 +21,29 @@ body {
 .standard-header {
 	background: linear-gradient(90deg, #262626, #121212);
 	color: white;
-	text-align: center;
-	padding: 1.5rem;
+	padding: 2px;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 	position: relative;
-	height: 100px;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 80px;
+}
+
+
+.logo {
+    height: 80px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .standard-header h1 {
-	font-size: 1.7rem;
+    margin: 0 auto;
+	font-size: 2.5rem;
 }
 
-#logo {
-	position: absolute;
-	top: 0.5rem;
-	left: 1rem;
-	width: 6%;
-	height: auto;
-}
 
 #error-title {
     color: #b30e0e;
@@ -48,29 +53,68 @@ body {
 
 
 /* Navigation definitioner */
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	background-color: #212121;
-	display: flex;
-	flex-wrap: wrap;
-	border: #4D4D4D 1px solid;
-	border-radius: 5px;
+.nav-container {
+  display: flex;
+  min-height: 50px;
+  border: #4d4d4d 1px solid;
+  border-radius: 5px;
+  position: relative;
 }
 
-ul li a {
-	display: block;
-	color: white;
-	padding: 14px 5rem;
-	text-decoration: none;
-	border: #787878 1px solid;
-	border-radius: 8px;
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.nav-list li a {
+  display: block;
+  background-color: #212121;
+  text-align: center;
+  color: white;
+  padding: 14px 5rem;
+  text-decoration: none;
+  border: #787878 1px solid;
+  border-radius: 8px;
 }
 
 ul li a:hover {
-	background-color: #111111;
+  background-color: #111111;
 }
+
+.menu-toggle {
+  display: none;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background-color: #212121;
+  text-align: center;
+  color: white;
+  padding: 14px 100%;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  text-decoration: none;
+  border: #787878 1px solid;
+  border-radius: 8px;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  width: 5rem;
+}
+
+
+
+
 
 
 /* Main definitioner */
@@ -179,4 +223,50 @@ input {
 
 /* Responsive definitioner */
 
+@media (max-width: 768px) {
+    .standard-header {
+        height: 40px;
+    }
 
+    .logo {
+        height: 40px;
+    }
+
+    .standard-header h1 {
+    	font-size: 1.4rem;
+    }
+
+
+    .nav-container {
+        flex: block;
+        align-items: center;
+        justify-content: center;
+      }
+
+    .burger {
+        display: flex;
+    }
+
+    .standard-nav {
+              position: absolute;
+              left: 0;
+              top: 50px;
+              width: 100%;
+              display: none;
+    }
+
+      .nav-list {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .nav-list a{
+        display: block;
+        margin-left: 2rem;
+        margin-right: 2rem;
+      }
+
+      .menu-toggle:checked + .burger + .standard-nav {
+        display: block;
+      }
+}

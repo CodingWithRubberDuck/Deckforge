@@ -17,14 +17,15 @@
 <body>
 
 <header class="standard-header">
-    <img id="logo" src="/images/deckforge-logo.png" alt="Billede af logo">
-    <h1>About us</h1>
+    <a href="/return">
+        <img class="logo" src="/images/deckforge-logo.png" alt="Billede af logo" href="/return">
+    </a>
+    <h1>About Us</h1>
 </header>
 
 
-<nav
-        th:insert="~{fragments/pre-navbar :: pre-navbar}">
-</nav>
+
+
 
 
 <main class="standard-main">
@@ -44,6 +45,10 @@
         <h2>Hvor kan du finde os?</h2>
         <p>Mosevænget 42, 4700 Næstved</p>
 
+        <br>
+        <form action="/return" method="get">
+            <button type="submit" class="standard-button" >Gå tilbage</button>
+        </form>
     </article>
 
 </main>
