@@ -13,17 +13,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
+
 <body>
+
 <header
         th:replace="~{fragments/header :: header}">
 </header>
 
 
-
-<nav>
-
+<nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
+    <h1>Events</h1>
 </nav>
-
 
 
 <main>
@@ -33,7 +34,6 @@
     </section>
 
 </main>
-
 
 
 <footer
