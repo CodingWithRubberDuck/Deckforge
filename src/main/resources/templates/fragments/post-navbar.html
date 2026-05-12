@@ -2,11 +2,21 @@
 
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<ul th:fragment="post-navbar">
-    <li><a href="/logout">Log ud</a></li>
-    <li><a href="/welcome">Velkomst side</a></li>
-    <li><a href="/personal/profile">Profil</a></li>
-    <li><a href="/event/search">Admin</a></li>
-</ul>
+<nav class="nav-container" th:fragment="post-navbar">
+    <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+    <label for="menu-toggle" class="burger" aria-label="Åbn menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+    <article class="standard-nav">
+        <ul class="nav-list">
+            <li><a href="/logout">Log ud</a></li>
+            <li><a href="/welcome">Start</a></li>
+            <li><a href="/personal/profile">Profil</a></li>
+            <li><a href="/event/search">Event</a></li>
+        </ul>
+    </article>
+</nav>
 
 </html>
