@@ -21,7 +21,7 @@ public class AuthUserService {
         this.registerValidation = registerValidation;
     }
 
-    public void checkRegister(AuthRequest authRequest){
+    public void checkRegister(AuthRequest authRequest, String repeated){
         User user;
         try {
             user = new User(authRequest.getName(), authRequest.getEmail(), authRequest.getPassword(), Role.USER);
@@ -29,7 +29,7 @@ public class AuthUserService {
             throw new RegisterValidationException(iae.getMessage());
         }
 
-        registerValidation.validate(user);
+        registerValidation.validate(user, repeated);
         if (repository.findByEmail(user.getEmail()).isPresent()){
             throw new RegisterValidationException("Den indtastede email er allerede i brug");
         }

@@ -11,7 +11,10 @@ import java.util.regex.Pattern;
 public class RegisterValidationService {
     private Pattern emailPattern;
 
-    public void validate(User user){
+    public void validate(User user, String repeated){
+        if (!user.getPassword().equals(repeated)){
+            throw new RegisterValidationException("Kodeordet er ikke det samme i begge felter");
+        }
         validateName(user.getName());
         validateEmail(user.getEmail());
         validatePassword(user.getPassword());

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthUserController {
@@ -30,8 +31,8 @@ public class AuthUserController {
     }
 
     @PostMapping("/authentication/register")
-    public String tryToRegister(@ModelAttribute AuthRequest authRequest) {
-        service.checkRegister(authRequest);
+    public String tryToRegister(@ModelAttribute AuthRequest authRequest, @RequestParam String repeated) {
+        service.checkRegister(authRequest, repeated);
         return "redirect:/authentication/login";
     }
 
