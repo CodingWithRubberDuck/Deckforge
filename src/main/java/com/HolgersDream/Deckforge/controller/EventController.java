@@ -14,7 +14,7 @@ public class EventController {
     }
 
     @GetMapping("/event/search")
-    public String search() {
+    public String searchEvent() {
         return "/event/search";
     }
 }
