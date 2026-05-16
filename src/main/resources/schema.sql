@@ -54,8 +54,8 @@ CREATE TABLE card_list (
                            picture VARCHAR(100) NOT NULL,
                            set_name VARCHAR(200) NOT NULL,
                            rule_text VARCHAR(300) NOT NULL,
-                           toughness INT DEFAULT 0,
                            power INT DEFAULT 0,
+                           toughness INT DEFAULT 0,
                            rarity ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC_RARE') NOT NULL
 );
 
