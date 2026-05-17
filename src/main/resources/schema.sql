@@ -46,7 +46,7 @@ CREATE TABLE card_list (
                            white_mana INT DEFAULT 0,
                            neutral_mana INT DEFAULT 0,
                            name VARCHAR(100) NOT NULL,
-                           supertype ENUM ('BASIC', 'LEGENDARY') DEFAULT ('BASIC'),
+                           super_type ENUM ('BASIC', 'LEGENDARY') DEFAULT ('BASIC'),
                            card_type ENUM ('ARTIFACT', 'CREATURE', 'ENCHANTMENT', 'INSTANT', 'KINDRED', 'LAND', 'SORCERY') NOT NULL,
                            multi_type ENUM ('ARTIFACT', 'CREATURE', 'ENCHANTMENT', 'INSTANT', 'KINDRED', 'LAND', 'SORCERY'),
                            sub_type VARCHAR(100),
