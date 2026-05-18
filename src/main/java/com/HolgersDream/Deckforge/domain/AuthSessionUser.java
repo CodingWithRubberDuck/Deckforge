@@ -30,8 +30,9 @@ public class AuthSessionUser {
 
     //Getters
 
-
+    //Skal bruges til at se kortsamling for bestemt user
     public int getUserId() {
         return userId;
     }
+
 }

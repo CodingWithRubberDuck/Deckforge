@@ -28,32 +28,21 @@
 <main class="standard-main">
     <article class="standard-main-article">
 
-        <h2>Dine kort</h2>
-        <p>Klik på et kort for at se detaljer</p>
+        <h2>Alle kort</h2>
+        <p>Klik på et kort for at se detaljer og tilføj det til din samling</p>
         <br>
 
-        <article class="standard-top-search">
-            <form th:action="@{/collection/search}" method="get">
-                <input type="text" name="name" th:value="${searchTerm}" placeholder="Søg efter navn på kort i samling">
-                <button type="submit" class="standard-button">Søg</button>
-            </form>
-
-            <a class="standard-button" th:href="@{/collection/add}">
-                Tilføj kort til samling
-            </a>
-        </article>
 
         <!-- Viser kort og man kan klikke ind på dem -->
         <section class="card-grid">
             <a class="card-item" th:each="card : ${cards}"
-               th:href="@{'/collection/card/' + ${card.ownedCardId}}">
+               th:href="@{'/collection/card/' + ${card.cardId}}">
                 <img th:src="@{'/' + ${card.picture}}" alt="Card image">
             </a>
         </section>
 
     </article>
 </main>
-
 
 
 <footer class="standard-footer"

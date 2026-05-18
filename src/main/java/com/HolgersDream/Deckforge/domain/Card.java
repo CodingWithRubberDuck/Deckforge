@@ -8,8 +8,15 @@ public class Card {
     private int redMana;
     private int whiteMana;
     private int neutralMana;
+
     private String name;
+
+    private SuperType superType;
     private Type type;
+    private Type multiType;
+    private String subType;
+
+    private boolean canBeCommander;
     private String picture;
     private String setName;
     private String ruleText;
@@ -21,7 +28,8 @@ public class Card {
     }
 
     public Card(int cardId, int blackMana, int blueMana, int greenMana, int redMana, int whiteMana,
-                int neutralMana, String name, Type type, String picture, String setName, String ruleText,
+                int neutralMana, String name, SuperType superType, Type type, Type multiType,
+                String subType, boolean canBeCommander, String picture, String setName, String ruleText,
                 int toughness, int power, Rarity rarity) {
         this.cardId = cardId;
         this.blackMana = blackMana;
@@ -30,8 +38,15 @@ public class Card {
         this.redMana = redMana;
         this.whiteMana = whiteMana;
         this.neutralMana = neutralMana;
+
         this.name = name;
+
+        this.superType = superType;
         this.type = type;
+        this.multiType = multiType;
+        this.subType = subType;
+
+        this.canBeCommander = canBeCommander;
         this.picture = picture;
         this.setName = setName;
         this.ruleText = ruleText;
@@ -73,8 +88,24 @@ public class Card {
         return name;
     }
 
+    public SuperType getSuperType() {
+        return superType;
+    }
+
     public Type getType() {
         return type;
+    }
+
+    public Type getMultiType() {
+        return multiType;
+    }
+
+    public String getSubType() {
+        return subType;
+    }
+
+    public boolean isCanBeCommander() {
+        return canBeCommander;
     }
 
     public String getPicture() {
@@ -134,8 +165,24 @@ public class Card {
         this.name = name;
     }
 
+    public void setSuperType(SuperType superType) {
+        this.superType = superType;
+    }
+
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public void setMultiType(Type multiType) {
+        this.multiType = multiType;
+    }
+
+    public void setSubType(String subType) {
+        this.subType = subType;
+    }
+
+    public void setCanBeCommander(boolean canBeCommander) {
+        this.canBeCommander = canBeCommander;
     }
 
     public void setPicture(String picture) {

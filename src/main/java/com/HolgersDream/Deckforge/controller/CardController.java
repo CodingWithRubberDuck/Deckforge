@@ -1,9 +1,7 @@
 package com.HolgersDream.Deckforge.controller;
 
 import com.HolgersDream.Deckforge.config.DatabaseConfig;
-import com.HolgersDream.Deckforge.domain.AuthSessionUser;
-import com.HolgersDream.Deckforge.domain.Deck;
-import com.HolgersDream.Deckforge.domain.Format;
+import com.HolgersDream.Deckforge.domain.*;
 import com.HolgersDream.Deckforge.service.CardService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -11,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +65,42 @@ public class CardController {
 
 
     @GetMapping("/collection/search")
-    public String searchCollection() {
+    public String showAndSearchCollection(@RequestParam(required = false) String name, HttpSession session, Model model) {
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/authentication/login";
+        }
+
+        int userId = currentUser.getUserId();
+
+        List<OwnedCard> cards;
+
+        if (name == null || name.isBlank()) {
+            // Vis hele samlingen
+            cards = service.getUserCollection(userId);
+        } else {
+            // Søg i samlingen
+            cards = service.findCardByName(userId, name);
+        }
+
+        model.addAttribute("cards", cards);
+
         return "/collection/search";
     }
+
+    @GetMapping("/collection/add")
+    public String showAddableCards(HttpSession session, Model model) {
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/authentication/login";
+        }
+
+        List<Card> cards = service.getAllCards();
+
+        model.addAttribute("cards", cards);
+
+        return "collection/add";
+    }
+
+
 }

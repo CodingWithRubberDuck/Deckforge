@@ -2,7 +2,8 @@ package com.HolgersDream.Deckforge.domain;
 
 public class OwnedCard extends Card {
     private int ownedCardId;
-    private String condition;
+    private int userId;
+    private Condition condition;
     private String foil;
 
 
@@ -11,13 +12,22 @@ public class OwnedCard extends Card {
     }
 
     public OwnedCard(int cardId, int blackMana, int blueMana, int greenMana, int redMana, int whiteMana,
-                     int neutralMana, String name, Type type, String picture, String setName, String ruleText,
-                     int toughness, int power, Rarity rarity, int ownedCardId, String condition, String foil) {
+                     int neutralMana, String name, SuperType superType, Type type, Type multiType,
+                     String subType, boolean canBeCommander, String picture, String setName, String ruleText,
+                     int toughness, int power, Rarity rarity, int ownedCardId, int userId, Condition condition, String foil) {
         super(cardId, blackMana, blueMana, greenMana, redMana, whiteMana,
-                neutralMana, name, type, picture, setName, ruleText, toughness, power, rarity);
+                neutralMana, name, superType, type, multiType, subType, canBeCommander, picture, setName, ruleText, toughness, power, rarity);
+        this.userId = userId;
         this.ownedCardId = ownedCardId;
         this.condition = condition;
         this.foil = foil;
+    }
+
+    //Constructor til at vise billeder af ejede kort i samling
+    public OwnedCard(int ownedCardId, String picture) {
+        super();
+        this.ownedCardId = ownedCardId;
+        this.setPicture(picture);
     }
 
     /// Getters
@@ -25,7 +35,11 @@ public class OwnedCard extends Card {
         return ownedCardId;
     }
 
-    public String getCondition() {
+    public int getUserId() {
+        return userId;
+    }
+
+    public Condition getCondition() {
         return condition;
     }
 
@@ -38,7 +52,11 @@ public class OwnedCard extends Card {
         this.ownedCardId = ownedCardId;
     }
 
-    public void setCondition(String condition) {
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setCondition(Condition condition) {
         this.condition = condition;
     }
 

@@ -1,7 +1,9 @@
 package com.HolgersDream.Deckforge.service;
 
 import com.HolgersDream.Deckforge.controller.DeckRequest;
+import com.HolgersDream.Deckforge.domain.Card;
 import com.HolgersDream.Deckforge.domain.Deck;
+import com.HolgersDream.Deckforge.domain.OwnedCard;
 import com.HolgersDream.Deckforge.domain.interfaces.ICardRepository;
 import com.HolgersDream.Deckforge.exceptions.NewDeckValidationException;
 import org.springframework.stereotype.Service;
@@ -30,5 +32,22 @@ public class CardService {
             throw new NewDeckValidationException(iae.getMessage());
         }
         repository.addDeckToUser(newDeck);
+    }
+
+
+    public List<OwnedCard> getUserCollection(int userId) {
+        return repository.getUserCardCollection(userId);
+    }
+
+    public List<OwnedCard> findCardByName(int userId, String name) {
+        return repository.findCardByName(userId, name);
+    }
+
+    public void addCard(OwnedCard ownedCard) {
+        repository.addCardToCollection(ownedCard);
+    }
+
+    public List<Card> getAllCards() {
+        return repository.getAllCards();
     }
 }
