@@ -27,4 +27,11 @@ public class AuthSessionUser {
         }
         this.role = role;
     }
+
+    //Getters
+
+
+    public int getUserId() {
+        return userId;
+    }
 }

@@ -24,7 +24,8 @@ public class AuthUserService {
     public void checkRegister(AuthRequest authRequest, String repeated){
         User user;
         try {
-            user = new User(authRequest.getName(), authRequest.getEmail(), authRequest.getPassword(), Role.USER);
+            //Indsætter bare placeholder id = 1, da det ikke vil blive brugt alligevel
+            user = new User(1, authRequest.getName(), authRequest.getEmail(), authRequest.getPassword(), Role.USER);
         } catch (IllegalArgumentException iae){
             throw new RegisterValidationException(iae.getMessage());
         }

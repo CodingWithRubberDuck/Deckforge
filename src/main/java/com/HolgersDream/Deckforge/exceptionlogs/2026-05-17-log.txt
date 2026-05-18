@@ -1,0 +1,7 @@
+
+18:23:22 : Request method 'POST' is not supported
+ HttpRequestMethodNotSupportedException : Request method 'POST' is not supported
+20:30:13 : Der gik noget galt i forbindelse med at finde listen af deck
+ SQLSyntaxErrorException : Column 'userId' not found.
+20:35:18 : Der gik noget galt i forbindelse med at oprette et nyt deck
+ SQLSyntaxErrorException : Unknown column 'card_amount' in 'field list'

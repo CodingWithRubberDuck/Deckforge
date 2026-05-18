@@ -52,6 +52,12 @@ public class GlobalExceptionHandler {
         return "redirect:/authentication/login";
     }
 
+    @ExceptionHandler(NewDeckValidationException.class)
+    public String handleNewDeckValidation(NewDeckValidationException ndve, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", ndve.getMessage());
+        return "redirect:/deck/add-deck";
+    }
+
 
     @ExceptionHandler(NoResourceFoundException.class)
     public String handleNoResourceFound(NoResourceFoundException nrfe, Model model){

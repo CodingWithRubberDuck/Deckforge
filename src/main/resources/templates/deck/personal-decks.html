@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Deckforge</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <meta name="description" content="Deckforge Hjemmeside">
+    <meta name="keywords" content="Magic, Magic the Gathering, Magic: The Gathering, MTG, MtG, mtg, Deckforge">
+    <meta name="author" content="???">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <header
+        th:replace="~{fragments/header :: header}">
+    </header>
+
+
+    <nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
+    </nav>
+
+
+    <main class="standard-main">
+
+        <article class="standard-main-article">
+
+            <h2>Liste af egne decks</h2>
+            <p>Tilføj et nyt deck eller rediger allerede oprettede:</p>
+            <br>
+            <form th:action="@{/deck/add-deck}" method="get">
+                <button type="submit" class="standard-button" >Tilføj nyt Deck</button>
+            </form>
+            <br>
+            <article class="decks-container">
+                <section class="specific-deck-container" th:each="deck : ${decks}">
+                    <p th:text="${deck.deckName}"></p>
+                    <p th:text="${deck.cardAmount}"></p>
+                    <p th:text="${deck.format.displayValue}"></p>
+                    <br>
+                    <form th:action="@{/deck/edit-deck/{id}(id=${deck.deckId})}"  method="get">
+                        <button type="submit" class="standard-button">Detaljer og Rediger</button>
+                    </form>
+                </section>
+
+            </article>
+
+        </article>
+
+    </main>
+
+
+    <footer class="standard-footer"
+            th:insert="~{fragments/footer :: footer}">
+    </footer>
+
+
+</body>
+
+
+</html>

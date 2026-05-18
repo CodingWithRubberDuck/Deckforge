@@ -1,18 +1,34 @@
 package com.HolgersDream.Deckforge.domain;
 
-import java.text.Normalizer;
-
 public class Deck {
     private int deckId;
+    private int userId;
     private int cardAmount;
+    private String deckName;
     private Format format;
 
-    public Deck() {
-    }
 
-    public Deck(int deckId, int cardAmount, Format format) {
+
+    public Deck(int deckId, int userId, int cardAmount, String deckName, Format format) {
+        if (deckId < 0){
+            throw new IllegalArgumentException("Ikke et gyldigt id for et deck");
+        }
         this.deckId = deckId;
+        if (userId < 0){
+            throw new IllegalArgumentException("Ikke et gyldigt bruger id for et deck");
+        }
+        this.userId = userId;
+        if (cardAmount < 0){
+            throw new IllegalArgumentException("Et deck kan ikke indeholde negative antal kort");
+        }
         this.cardAmount = cardAmount;
+        if (deckName == null || deckName.isBlank()){
+            throw new IllegalArgumentException("Et deck skal indeholde et navn");
+        }
+        this.deckName = deckName;
+        if (format == null){
+            throw new IllegalArgumentException("Et deck skal have tildelt et format");
+        }
         this.format = format;
     }
 
@@ -21,24 +37,21 @@ public class Deck {
         return deckId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     public int getCardAmount() {
         return cardAmount;
+    }
+
+    public String getDeckName(){
+        return deckName;
     }
 
     public Format getFormat() {
         return format;
     }
 
-    /// Setters
-    public void setDeckId(int deckId) {
-        this.deckId = deckId;
-    }
 
-    public void setCardAmount(int cardAmount) {
-        this.cardAmount = cardAmount;
-    }
-
-    public void setFormat(Format format) {
-        this.format = format;
-    }
 }

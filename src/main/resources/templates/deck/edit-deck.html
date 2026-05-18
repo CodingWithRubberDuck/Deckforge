@@ -14,32 +14,44 @@
 </head>
 
 <body>
-
-<header
+<header class="standard-header"
         th:replace="~{fragments/header :: header}">
 </header>
 
 
-<nav>
 
+
+<nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
 </nav>
 
 
-<main>
 
-    <section>
+<main class="standard-main">
 
-    </section>
+    <article class="standard-main-article">
 
+        <h2>Opret Nyt Deck</h2>
+        <p>Indtast den relevante information, og klik på knappen:</p>
+        <br>
+        <!--Viser kun fejlmeddelse/border hvis den ikke er tom eller null -->
+        <section class="standard-warning-message" th:if="${responseMessage != null and !#strings.isEmpty(responseMessage)}">
+            <p th:text="${responseMessage}"></p>
+        </section>
+        <br>
+
+
+
+    </article>
 </main>
 
 
-<footer
+
+<footer class="standard-footer"
         th:insert="~{fragments/footer :: footer}">
 </footer>
 
 
 </body>
-
 
 </html>

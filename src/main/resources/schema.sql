@@ -53,7 +53,7 @@ CREATE TABLE card_list (
                            can_be_commander BOOLEAN DEFAULT false,
                            picture VARCHAR(100) NOT NULL,
                            set_name VARCHAR(200) NOT NULL,
-                           rule_text VARCHAR(300) NOT NULL,
+                           rule_text VARCHAR(1000) NOT NULL,
                            power INT DEFAULT 0,
                            toughness INT DEFAULT 0,
                            rarity ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC_RARE') NOT NULL
@@ -73,7 +73,8 @@ CREATE TABLE deck (
                       deck_id INT AUTO_INCREMENT PRIMARY KEY,
                       user_id INT,
                       FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
-                      card_amount INT NOT NULL,
+                      deck_name VARCHAR(100) DEFAULT 'Unavngivet',
+                      --card_amount INT NOT NULL,
                       format ENUM ('COMMANDER', 'STANDARD') NOT NULL
 );
 

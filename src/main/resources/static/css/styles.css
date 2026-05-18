@@ -53,7 +53,7 @@ body {
 
 
 /* Navigation definitioner */
-.nav-container {
+   	.nav-container {
   display: flex;
   min-height: 50px;
   border: #4d4d4d 1px solid;
@@ -61,12 +61,22 @@ body {
   position: relative;
 }
 
+.standard-nav {
+  flex: 1;
+}
+
+
 .nav-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+.nav-list li {
+	flex: 1 1 0;
 }
 
 .nav-list li a {
@@ -74,7 +84,7 @@ body {
   background-color: #212121;
   text-align: center;
   color: white;
-  padding: 14px 5rem;
+  padding: 14px 0;
   text-decoration: none;
   border: #787878 1px solid;
   border-radius: 8px;
@@ -96,12 +106,13 @@ ul li a:hover {
   background-color: #212121;
   text-align: center;
   color: white;
-  padding: 14px 100%;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  padding: 14px;
   text-decoration: none;
   border: #787878 1px solid;
   border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .burger span {
@@ -111,6 +122,8 @@ ul li a:hover {
   border-radius: 2px;
   width: 5rem;
 }
+
+
 
 
 
@@ -194,6 +207,36 @@ input {
     border-radius: 8px;
 }
 
+/*Deck */
+.decks-container {
+    padding: 2rem;
+    padding-bottom: 6rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.specific-deck-container {
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: #212121;
+    border-radius: 10px;
+    border: #787878 1px solid;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.drop-down {
+    width: 300px;
+    height: 50px;
+    border: 2px solid #6B6767;
+   	border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: 0.5rem;
+    background-color: #D9D9D9;
+    text-align: center;
+}
+
+
+
 
 
 /* Footer definitioner */
@@ -223,7 +266,7 @@ input {
 
 /* Responsive definitioner */
 
-@media (max-width: 768px) {
+       @media (max-width: 768px) {
     .standard-header {
         height: 40px;
     }
@@ -238,13 +281,14 @@ input {
 
 
     .nav-container {
-        flex: block;
         align-items: center;
         justify-content: center;
+        border-radius: none;
       }
 
     .burger {
         display: flex;
+        flex: 1 1 0;
     }
 
     .standard-nav {

@@ -44,7 +44,7 @@ public class User {
         this.password = password;
     }
 
-
+/**
 
     //Konstruktør uden Id
     public User(String name, String email, String password, Role role){
@@ -57,6 +57,7 @@ public class User {
         this.password = password;
     }
 
+ */
 
     //Konstruktør uden Kodeord
     public User(int userId, String name, String email, Role role){
