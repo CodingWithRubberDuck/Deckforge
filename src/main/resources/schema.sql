@@ -22,19 +22,19 @@ CREATE TABLE event (
                        event_id INT AUTO_INCREMENT PRIMARY KEY,
                        owner_id INT,
                        FOREIGN KEY (owner_id) REFERENCES user(user_id) ON DELETE CASCADE,
+                       event_name VARCHAR(200) NOT NULL,
                        max_slots INT NOT NULL,
-                       available_slots INT NOT NULL,
-                       location VARCHAR(200) NOT NULL,
+                       location VARCHAR(300) NOT NULL,
                        start_time TIME NOT NULL,
                        date DATE NOT NULL
 );
 
 CREATE TABLE user_participate_event (
-                                        user_id INT,
-                                        event_id INT,
-                                        PRIMARY KEY (user_id, event_id),
-                                        FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
-                                        FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE
+                       user_id INT,
+                       event_id INT,
+                       PRIMARY KEY (user_id, event_id),
+                       FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
+                       FOREIGN KEY (event_id) REFERENCES event(event_id) ON DELETE CASCADE
 );
 
 CREATE TABLE card_list (

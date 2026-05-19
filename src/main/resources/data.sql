@@ -72,6 +72,11 @@ VALUES ('Frank', 'Frank@gmail.com', '$2a$10$VxHaDOtbRR9P5aWhz1Nv.eVAB5gETUHv7K82
 INSERT INTO user (name, email, password_hash)
 VALUES ('MagicMan', 'Magic@gmail.com', '$2a$10$kM4GSt4pPksh2NiPY5oxreDYngo28Ew4E/S7V6EPgPqarSht.OXam');
 
+--Password organizeth1s
+INSERT INTO user (name, email, password_hash, role)
+VALUES ('TheOrganizer', 'Mads@gmail.com', '$2a$10$53fVrsjMCDKy.Dm7eYdMkeUDO8mA/8/Wipe92b30yYIAITpXlmCV2', 'ORGANIZER');
+
+
 
 --deck
 INSERT INTO deck (user_id, deck_name, format)
@@ -88,8 +93,40 @@ VALUES (2, 'WIP', 'COMMANDER');
 
 
 --owned / collection
-INSERT INTO owned_card (card_id, user_id)
-VALUES (11, 2)
+INSERT INTO owned_card (card_id, user_id, card_condition)
+VALUES (11, 2, 'NEAR_MINT');
 
 
 
+
+--Event
+INSERT INTO event (owner_id, event_name, max_slots, location, start_time, date)
+VALUES (1, 'Navn Lorem Ipsum', 100, 'Adresse Lorem Ipsum', '09:15', '2026-04-05');
+
+INSERT INTO event (owner_id, event_name, max_slots, location, start_time, date)
+VALUES (1, 'Navn Lorem Ipsum', 120, 'Adresse Lorem Ipsum', '10:30', '2026-07-10');
+
+INSERT INTO event (owner_id, event_name, max_slots, location, start_time, date)
+VALUES (2, 'Navn Lorem Ipsum', 50, 'Adresse Lorem Ipsum', '16:45', '2026-06-15');
+
+INSERT INTO event (owner_id, event_name, max_slots, location, start_time, date)
+VALUES (2, 'Navn Lorem Ipsum', 145, 'Adresse Lorem Ipsum', '15:00', '2026-07-12' );
+
+
+
+--Participate in Event
+
+INSERT INTO user_participate_event (user_id, event_id)
+VALUES (2, 3);
+
+INSERT INTO user_participate_event (user_id, event_id)
+VALUES (2, 2);
+
+INSERT INTO user_participate_event (user_id, event_id)
+VALUES (3, 2);
+
+INSERT INTO user_participate_event (user_id, event_id)
+VALUES (3, 3);
+
+INSERT INTO user_participate_event (user_id, event_id)
+VALUES (3, 4);

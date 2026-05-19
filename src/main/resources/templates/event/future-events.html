@@ -16,28 +16,39 @@
 
 <body>
 
-<header
+    <header
         th:replace="~{fragments/header :: header}">
-</header>
+    </header>
 
 
-<nav
+    <nav
         th:insert="~{fragments/post-navbar :: post-navbar}">
-</nav>
+    </nav>
 
 
-<main>
+    <main class="standard-main">
 
-    <section>
+        <article class="standard-main-article">
+            <h2>Opkommende events:</h2>
+            <br>
+            <section class="event-container" th:each="event : ${events}">
+                <p th:text="${event.eventName}"></p>
+                <p th:text="${event.maxSlots}"></p>
+                <p th:text="${event.availableSlots}"></p>
+                <p th:text="${event.location}"></p>
+                <p th:text="${event.startTime}"></p>
+                <p th:text="${event.date}"></p>
+            </section>
+        </article>
 
-    </section>
+    </main>
 
-</main>
+    
 
 
-<footer
+    <footer class="standard-footer"
         th:insert="~{fragments/footer :: footer}">
-</footer>
+    </footer>
 
 
 </body>

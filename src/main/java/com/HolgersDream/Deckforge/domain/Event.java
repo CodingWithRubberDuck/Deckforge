@@ -1,34 +1,73 @@
 package com.HolgersDream.Deckforge.domain;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Event {
     private int eventId;
+    private int ownerId;
+    private String eventName;
     private int maxSlots;
     private int availableSlots;
-    private Format format;
     private String location;
-    private Time startTime;
-    private Date date;
+    private LocalTime startTime;
+    private LocalDate date;
 
-    public Event() {
-    }
 
-    public Event(int eventId, int maxSlots, int availableSlots, Format format, String location,
-                 Time startTime, Date date) {
+    public Event(int eventId, int ownerId, String eventName, int maxSlots, int availableSlots, String location,
+                 LocalTime startTime, LocalDate date) {
+        if (eventId < 0){
+            throw new IllegalArgumentException("Dette event id er ikke et gyldigt id til et event");
+        }
         this.eventId = eventId;
+
+        if (ownerId < 0){
+            throw new IllegalArgumentException("Dette bruger id er ikke et gyldigt id til et event");
+        }
+        this.ownerId = ownerId;
+
+        if (eventName == null || eventName.isBlank()){
+            throw new IllegalArgumentException("Et event skal indeholde et navn");
+        }
+        this.eventName = eventName;
+
+        if (maxSlots < 0){
+            throw new IllegalArgumentException("Et event kan ikke have negative maksimale pladser");
+        }
         this.maxSlots = maxSlots;
+
+        if (availableSlots < 0){
+            throw new IllegalArgumentException("Et event kan ikke have et negativt antal ledige pladser");
+        }
         this.availableSlots = availableSlots;
-        this.format = format;
+
+        if (location == null || location.isBlank()){
+            throw new IllegalArgumentException("Et event skal indeholde en lokation eller adresse");
+        }
         this.location = location;
+
+        if (startTime == null){
+            throw new IllegalArgumentException("Et event skal have tildelt et startstidspunkt");
+        }
         this.startTime = startTime;
+
+        if (date == null || date.isBefore(LocalDate.now())){
+            throw new IllegalArgumentException("Et event skal have en start dato i fremtiden eller nutiden");
+        }
         this.date = date;
     }
 
     /// Getters
     public int getEventId() {
         return eventId;
+    }
+
+    public int getOwnerId(){
+        return ownerId;
+    }
+
+    public String getEventName(){
+        return eventName;
     }
 
     public int getMaxSlots() {
@@ -39,23 +78,20 @@ public class Event {
         return availableSlots;
     }
 
-    public Format getFormat() {
-        return format;
-    }
-
     public String getLocation() {
         return location;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
     /// Setters
+    /*
     public void setEventId(int eventId) {
         this.eventId = eventId;
     }
@@ -68,19 +104,17 @@ public class Event {
         this.availableSlots = availableSlots;
     }
 
-    public void setFormat(Format format) {
-        this.format = format;
-    }
-
     public void setLocation(String location) {
         this.location = location;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
+    */
+
 }

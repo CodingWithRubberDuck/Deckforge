@@ -29,9 +29,14 @@
 
     <article class="standard-main-article">
 
-        <h2>Template Titel</h2>
-        <p>Template brødtekst</p>
-
+        <h2>Her kan du navigere rundt til forskellige event sider</h2>
+        <br>
+        <p>Her kan du se opkommende events:</p>
+        <br>
+        <br>
+        <form th:action="@{/event/future-events}" method="get">
+            <button type="submit" class="standard-button" >Se kommende events</button>
+        </form>
 
 
     </article>
