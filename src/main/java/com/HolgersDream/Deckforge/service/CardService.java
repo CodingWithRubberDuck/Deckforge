@@ -43,11 +43,15 @@ public class CardService {
         return repository.findCardByName(userId, name);
     }
 
-    public void addCard(OwnedCard ownedCard) {
+    public void addCardToCollection(OwnedCard ownedCard) {
         repository.addCardToCollection(ownedCard);
     }
 
     public List<Card> getAllCards() {
         return repository.getAllCards();
+    }
+
+    public Card getCardById(int cardId) {
+        return repository.getCardById(cardId);
     }
 }

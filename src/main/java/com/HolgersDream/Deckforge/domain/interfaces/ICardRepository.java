@@ -14,4 +14,5 @@ public interface ICardRepository {
     List<OwnedCard> findCardByName(int userId, String name);
     void addCardToCollection (OwnedCard ownedCard);
     List<Card> getAllCards();
+    Card getCardById(int cardId);
 }

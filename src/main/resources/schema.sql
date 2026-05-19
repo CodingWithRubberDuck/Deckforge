@@ -23,7 +23,6 @@ CREATE TABLE event (
                        owner_id INT,
                        FOREIGN KEY (owner_id) REFERENCES user(user_id) ON DELETE CASCADE,
                        max_slots INT NOT NULL,
-                       available_slots INT NOT NULL,
                        location VARCHAR(200) NOT NULL,
                        start_time TIME NOT NULL,
                        date DATE NOT NULL
@@ -74,7 +73,6 @@ CREATE TABLE deck (
                       user_id INT,
                       FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
                       deck_name VARCHAR(100) DEFAULT 'Unavngivet',
-                      --card_amount INT NOT NULL,
                       format ENUM ('COMMANDER', 'STANDARD') NOT NULL
 );
 

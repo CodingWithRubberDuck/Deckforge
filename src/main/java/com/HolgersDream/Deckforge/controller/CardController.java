@@ -6,10 +6,7 @@ import com.HolgersDream.Deckforge.service.CardService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +98,48 @@ public class CardController {
 
         return "collection/add";
     }
+
+    @GetMapping("/collection/card/{cardId}")
+    public String showCardDetails(@PathVariable int cardId, HttpSession session, Model model) {
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/authentication/login";
+        }
+
+        Card card = service.getCardById(cardId); // henter kortet fra card_list
+        model.addAttribute("card", card);
+        return "collection/detail-view";
+    }
+
+    @PostMapping("/collection/addCard")
+    public String addCardToCollection(@RequestParam int cardId, HttpSession session) {
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/authentication/login";
+        }
+
+        OwnedCard ownedCard = new OwnedCard();
+        ownedCard.setUserId(currentUser.getUserId());
+        ownedCard.setCardId(cardId);
+
+        service.addCardToCollection(ownedCard);
+
+        return "redirect:/collection/search";
+    }
+
+
+    /*
+    @PostMapping("/collection/addCard")
+    public String addCardToCollection(@RequestParam int cardId, HttpSession session) {
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/authentication/login";
+        }
+
+        service.addCardToUserCollection(currentUser.getUserId(), cardId);
+        return "redirect:/collection/search";
+    }
+     */
 
 
 }

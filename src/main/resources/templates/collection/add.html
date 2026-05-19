@@ -20,8 +20,8 @@
 </header>
 
 
-<nav>
-
+<nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
 </nav>
 
 
@@ -37,7 +37,7 @@
         <section class="card-grid">
             <a class="card-item" th:each="card : ${cards}"
                th:href="@{'/collection/card/' + ${card.cardId}}">
-                <img th:src="@{'/' + ${card.picture}}" alt="Card image">
+                <img th:src="@{'/images/' + ${card.picture}}" alt="Card image">
             </a>
         </section>
 

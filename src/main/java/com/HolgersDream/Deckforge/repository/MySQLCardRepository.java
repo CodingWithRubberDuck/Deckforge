@@ -35,8 +35,8 @@ public class MySQLCardRepository implements ICardRepository {
                 """;
 
 
-        try(Connection c = databaseConfig.getConnection();
-            PreparedStatement stmt = c.prepareStatement(sql)){
+        try (Connection c = databaseConfig.getConnection();
+             PreparedStatement stmt = c.prepareStatement(sql)) {
 
             stmt.setInt(1, userId);
 
@@ -44,7 +44,7 @@ public class MySQLCardRepository implements ICardRepository {
 
             List<Deck> decks = new ArrayList<>();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 Deck deck = new Deck(
                         rs.getInt("deck_id"),
                         rs.getInt("user_id"),
@@ -57,7 +57,7 @@ public class MySQLCardRepository implements ICardRepository {
 
             return Optional.of(decks);
 
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             throw new DataAccessException("Der gik noget galt i forbindelse med at finde listen af deck", sqle);
         }
     }
@@ -68,7 +68,7 @@ public class MySQLCardRepository implements ICardRepository {
                 "VALUES (?, ?, ?)";
 
         try (Connection c = databaseConfig.getConnection();
-            PreparedStatement stmt = c.prepareStatement(sql)){
+             PreparedStatement stmt = c.prepareStatement(sql)) {
 
             stmt.setInt(1, newDeck.getUserId());
             stmt.setString(2, newDeck.getDeckName());
@@ -76,7 +76,7 @@ public class MySQLCardRepository implements ICardRepository {
 
             stmt.executeUpdate();
 
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             throw new DataAccessException("Der gik noget galt i forbindelse med at oprette et nyt deck", sqle);
         }
 
@@ -88,10 +88,10 @@ public class MySQLCardRepository implements ICardRepository {
         List<OwnedCard> ownedCards = new ArrayList<>();
 
         String sql = """
-                    SELECT owned_card.owned_card_id, card_list.picture
+                    SELECT owned_card.owned_card_id, card_list.*
                     FROM owned_card
                     JOIN card_list ON owned_card.card_id = card_list.card_id
-                    WHERE owned_card.user_id = ?
+                    WHERE owned_card.user_id = ? 
                 """;
 
         try (Connection conn = databaseConfig.getConnection();
@@ -119,7 +119,15 @@ public class MySQLCardRepository implements ICardRepository {
 
     @Override
     public List<OwnedCard> findCardByName(int userId, String name) {
-        String sql = "SELECT * FROM owned_card WHERE user_id = ? AND name LIKE ? ORDER BY name ASC";
+        String sql = """
+                SELECT owned_card.owned_card_id, card_list.name, card_list.picture
+                FROM owned_card
+                JOIN card_list ON owned_card.card_id = card_list.card_id
+                WHERE owned_card.user_id = ?
+                  AND card_list.name LIKE ?
+                ORDER BY card_list.name ASC
+                """;
+
 
         try (Connection con = databaseConfig.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -148,8 +156,8 @@ public class MySQLCardRepository implements ICardRepository {
     @Override
     public void addCardToCollection(OwnedCard ownedCard) {
         String sql = """
-                INSERT INTO owned_card (user_id, card_id, card_condition, foil)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO owned_card (user_id, card_id)
+                VALUES (?, ?)
                 """;
 
         try (Connection con = databaseConfig.getConnection();
@@ -157,10 +165,7 @@ public class MySQLCardRepository implements ICardRepository {
 
             stmt.setInt(1, ownedCard.getUserId());
             stmt.setInt(2, ownedCard.getCardId());
-            stmt.setString(3, ownedCard.getCondition().name());
-            stmt.setString(4, ownedCard.getFoil());
-
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
         } catch (SQLException sqle) {
             throw new DataAccessException("Kunne ikke tilføje kort til samling", sqle);
@@ -215,6 +220,55 @@ public class MySQLCardRepository implements ICardRepository {
 
         return cards;
     }
+
+    public Card getCardById(int cardId) {
+        String sql = "SELECT * FROM card_list WHERE card_id = ?";
+
+        try (Connection con = databaseConfig.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, cardId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Card card = new Card();
+
+                card.setCardId(rs.getInt("card_id"));
+                card.setBlackMana(rs.getInt("black_mana"));
+                card.setBlueMana(rs.getInt("blue_mana"));
+                card.setGreenMana(rs.getInt("green_mana"));
+                card.setRedMana(rs.getInt("red_mana"));
+                card.setWhiteMana(rs.getInt("white_mana"));
+                card.setNeutralMana(rs.getInt("neutral_mana"));
+
+                card.setName(rs.getString("name"));
+
+                card.setSuperType(SuperType.valueOf(rs.getString("super_type")));
+                card.setType(Type.valueOf(rs.getString("card_type")));
+                String multiType = rs.getString("multi_type");
+                if (multiType != null) {
+                    card.setMultiType(Type.valueOf(multiType));
+                }
+                card.setSubType(rs.getString("sub_type"));
+
+                card.setCanBeCommander(rs.getBoolean("can_be_commander"));
+                card.setPicture(rs.getString("picture"));
+                card.setSetName(rs.getString("set_name"));
+                card.setRuleText(rs.getString("rule_text"));
+                card.setPower(rs.getInt("power"));
+                card.setToughness(rs.getInt("toughness"));
+                card.setRarity(Rarity.valueOf(rs.getString("rarity")));
+
+                return card;
+            }
+
+            return null;
+
+        } catch (SQLException sqle) {
+            throw new DataAccessException("Kunne ikke hente kort detaljer", sqle);
+        }
+    }
+
 
 }
 
