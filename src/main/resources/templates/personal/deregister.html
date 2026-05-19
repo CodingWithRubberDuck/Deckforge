@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Deckforge</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <meta name="description" content="Deckforge Hjemmeside">
+    <meta name="keywords" content="Magic, Magic the Gathering, Magic: The Gathering, MTG, MtG, mtg, Deckforge">
+    <meta name="author" content="???">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<header class="standard-header"
+        th:replace="~{fragments/header :: header}">
+</header>
+
+
+
+
+<nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
+</nav>
+
+
+
+<main class="standard-main">
+
+    <article class="standard-main-article">
+
+        <h2>Du er ved at slette din profil</h2>
+        <br>
+        <p>Dine data vil ikke slettes med det samme, men gemmes af lovmæssige grunde i 2 år</p>
+        <br>
+        <p>Der er mulighed for en fortrydelsesret, ved et successfuldt login i tidsrummet inden den permanente sletning, vil nedtællingen annulleres </p>
+        <br>
+        <form th:action="@{/personal/profile}" method="get">
+            <button type="submit" class="standard-button" >Fortryd</button>
+        </form>
+        <br>
+        <form th:action="@{/personal/deregister}" method="post">
+            <button type="submit" class="warning-button" >Bekræft</button>
+        </form>
+
+    </article>
+
+</main>
+
+
+
+<footer class="standard-footer"
+        th:insert="~{fragments/footer :: footer}">
+</footer>
+
+
+</body>
+
+
+</html>

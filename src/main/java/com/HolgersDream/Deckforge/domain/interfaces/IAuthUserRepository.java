@@ -6,4 +6,5 @@ import java.util.Optional;
 public interface IAuthUserRepository {
     Optional<User> findByEmail(String email);
     void saveNewUser(User user);
+    void updateLastLogin(int userId);
 }

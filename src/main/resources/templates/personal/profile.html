@@ -16,28 +16,47 @@
 
 <body>
 
-<header
+    <header
         th:replace="~{fragments/header :: header}">
-</header>
+    </header>
 
 
-<nav
+    <nav
         th:insert="~{fragments/post-navbar :: post-navbar}">
-</nav>
+    </nav>
 
 
-<main>
+    <main class="standard-main">
 
-    <section>
+        <article class="standard-main-article">
 
-    </section>
+            <h2>Egen Profil</h2>
+            <p>Her kan du se din egen profil og afmelde din konto</p>
 
-</main>
+            <br>
+
+            <strong><h1>Navn:</h1></strong>
+            <h3 class="bordered-text" th:text="${name}"></h3>
+
+            <br>
+
+            <strong><h1>Email:</h1></strong>
+            <h3 class="bordered-text" th:text="${email}"></h3>
+
+            <br>
+
+            <form th:action="@{/personal/deregister}" method="get">
+                <button type="submit" class="warning-button" >Afmeld din konto</button>
+            </form>
+
+        </article>
+
+    </main>
 
 
-<footer
+    <footer class="standard-footer"
         th:insert="~{fragments/footer :: footer}">
-</footer>
+    </footer>
 
 
 </body>

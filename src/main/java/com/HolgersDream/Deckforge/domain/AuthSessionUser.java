@@ -1,5 +1,7 @@
 package com.HolgersDream.Deckforge.domain;
 
+import java.time.LocalDate;
+
 public class AuthSessionUser {
     private final int userId;
     private final String name;
@@ -26,6 +28,7 @@ public class AuthSessionUser {
             throw new IllegalArgumentException("Sessionen har ikke en gyldig rolle");
         }
         this.role = role;
+
     }
 
     //Getters
@@ -34,5 +37,18 @@ public class AuthSessionUser {
     public int getUserId() {
         return userId;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
 
 }

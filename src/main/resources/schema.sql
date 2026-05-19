@@ -14,7 +14,7 @@ CREATE TABLE user (
                       password_hash VARCHAR(400) NOT NULL,
                       role ENUM ('USER', 'ORGANIZER', 'ADMIN') DEFAULT ('USER'),
                       last_logged_in DATE,
-                      date_asked_for_removal DATE,
+                      date_asked_for_delete DATE,
                       profile_visibility ENUM ('PRIVATE', 'PUBLIC')
 );
 
@@ -23,6 +23,7 @@ CREATE TABLE event (
                        owner_id INT,
                        FOREIGN KEY (owner_id) REFERENCES user(user_id) ON DELETE CASCADE,
                        max_slots INT NOT NULL,
+                       available_slots INT NOT NULL,
                        location VARCHAR(200) NOT NULL,
                        start_time TIME NOT NULL,
                        date DATE NOT NULL
@@ -84,3 +85,25 @@ CREATE TABLE deck_contain_card (
                                    FOREIGN KEY (card_id) REFERENCES card_list(card_id) ON DELETE CASCADE,
                                    is_commander BOOLEAN DEFAULT false
 );
+
+
+
+
+
+SET GLOBAL event_scheduler = ON;
+
+DROP EVENT IF EXISTS delete_inactive_for_five_years;
+CREATE EVENT delete_inactive_for_five_years
+ON SCHEDULE EVERY 1 MONTH
+DO
+DELETE FROM user
+WHERE last_logged_in < current_date - INTERVAL 5 YEAR;
+
+
+
+DROP EVENT IF EXISTS delete_asked_for_delete;
+CREATE EVENT delete_asked_for_delete
+ON SCHEDULE EVERY 1 MONTH
+DO
+DELETE FROM user
+WHERE date_asked_for_delete < current_date - INTERVAL 2 YEAR;

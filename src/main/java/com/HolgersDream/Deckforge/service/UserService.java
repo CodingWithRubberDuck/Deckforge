@@ -11,4 +11,8 @@ public class UserService {
     public UserService(IUserRepository repository){
         this.repository = repository;
     }
+
+    public void markingToDelete(int userId){
+        repository.markToDeleteById(userId);
+    }
 }

@@ -1,15 +1,24 @@
 package com.HolgersDream.Deckforge.domain;
 
+import java.time.LocalDate;
+
 public class User {
     private int userId;
     private String name;
     private String email;
     private String password;
     private Role role;
+    private LocalDate dateAskedForDelete;
 
 
     //Base Chain Constructor kald
-    private User(String name, String email, Role role){
+    //Constructor uden password (Skal muligvis bruges i fremtiden til at vise brugere som deltager i et event)
+    public User(int userId, String name, String email, Role role){
+        if (userId <= 0){
+            throw new IllegalArgumentException("Brugeren har ikke et gyldigt id");
+        }
+        this.userId = userId;
+
         if (name == null || name.isBlank()){
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt navn");
         }
@@ -31,12 +40,7 @@ public class User {
     //Konstruktør med alle værdier
     public User(int userId, String name, String email, String password, Role role) {
         //Chain constructor kald
-        this(name, email, role);
-
-        if (userId < 1){
-            throw new IllegalArgumentException("Brugeren har ikke et gyldigt id");
-        }
-        this.userId = userId;
+        this(userId, name, email, role);
 
         if (password == null || password.isBlank()){
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt kodeord");
@@ -44,31 +48,6 @@ public class User {
         this.password = password;
     }
 
-/**
-
-    //Konstruktør uden Id
-    public User(String name, String email, String password, Role role){
-        //Chain constructor kald
-        this(name, email, role);
-
-        if (password == null || password.isBlank()){
-            throw new IllegalArgumentException("Brugeren har ikke et gyldigt kodeord");
-        }
-        this.password = password;
-    }
-
- */
-
-    //Konstruktør uden Kodeord
-    public User(int userId, String name, String email, Role role){
-        //Chain constructor kald
-        this(name, email, role);
-
-        if (userId < 1){
-            throw new IllegalArgumentException("Brugeren har ikke et gyldigt id");
-        }
-        this.userId = userId;
-    }
 
     // Change with rules
     public void changePassword(String newPassword){
