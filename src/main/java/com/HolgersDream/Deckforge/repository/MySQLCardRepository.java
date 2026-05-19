@@ -195,7 +195,10 @@ public class MySQLCardRepository implements ICardRepository {
 
                 card.setName(rs.getString("name"));
 
-                card.setSuperType(SuperType.valueOf(rs.getString("super_type")));
+                String superType = rs.getString("super_type");
+                if (superType != null) {
+                    card.setSuperType(SuperType.valueOf(superType));
+                }
                 card.setType(Type.valueOf(rs.getString("card_type")));
                 String multiType = rs.getString("multi_type");
                 if (multiType != null) {
@@ -243,7 +246,10 @@ public class MySQLCardRepository implements ICardRepository {
 
                 card.setName(rs.getString("name"));
 
-                card.setSuperType(SuperType.valueOf(rs.getString("super_type")));
+                String superType = rs.getString("super_type");
+                if (superType != null) {
+                    card.setSuperType(SuperType.valueOf(superType));
+                }
                 card.setType(Type.valueOf(rs.getString("card_type")));
                 String multiType = rs.getString("multi_type");
                 if (multiType != null) {

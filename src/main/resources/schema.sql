@@ -45,17 +45,17 @@ CREATE TABLE card_list (
                            white_mana INT DEFAULT 0,
                            neutral_mana INT DEFAULT 0,
                            name VARCHAR(100) NOT NULL,
-                           super_type ENUM ('BASIC', 'LEGENDARY') DEFAULT ('BASIC'),
+                           super_type ENUM ('BASIC', 'LEGENDARY') DEFAULT NULL,
                            card_type ENUM ('ARTIFACT', 'CREATURE', 'ENCHANTMENT', 'INSTANT', 'KINDRED', 'LAND', 'SORCERY') NOT NULL,
                            multi_type ENUM ('ARTIFACT', 'CREATURE', 'ENCHANTMENT', 'INSTANT', 'KINDRED', 'LAND', 'SORCERY'),
                            sub_type VARCHAR(100),
                            can_be_commander BOOLEAN DEFAULT false,
                            picture VARCHAR(100) NOT NULL,
                            set_name VARCHAR(200) NOT NULL,
-                           rule_text VARCHAR(1000) NOT NULL,
+                           rule_text VARCHAR(1000),
                            power INT DEFAULT 0,
                            toughness INT DEFAULT 0,
-                           rarity ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC_RARE') NOT NULL
+                           rarity ENUM ('COMMON', 'UNCOMMON', 'RARE', 'MYTHIC_RARE', 'LAND') NOT NULL
 );
 
 CREATE TABLE owned_card (

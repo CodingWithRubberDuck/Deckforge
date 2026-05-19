@@ -209,11 +209,17 @@ input {
 
 .standard-top-search {
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
     align-items: center;
-    gap: 110px;
-    flex-wrap: wrap;
+    gap: 15px;
     margin-bottom: 20px;
+}
+
+.standard-top-search form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 

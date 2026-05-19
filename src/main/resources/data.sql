@@ -47,6 +47,9 @@ INSERT INTO card_list (neutral_mana, green_mana, name, card_type, sub_type, pict
 VALUES (2, 1, 'Gus', 'CREATURE', 'Gus', 'Gus.png', 'Unglued',
         'This creature enters with a +1/+1 counter on it for each Magic game you have lost to one of your opponents since you last won a game against them.', 2, 2, 'COMMON');
 
+INSERT INTO card_list (name, super_type, card_type, sub_type, picture, set_name, rarity)
+VALUES ('Island', 'BASIC', 'LAND', 'Island', 'island.png', 'Secrets of Strixhaven', 'LAND');
+
 
 --Commander kort
 INSERT INTO card_list (neutral_mana, green_mana, name, super_type, card_type, sub_type, can_be_commander, picture, set_name, rule_text, power, toughness, rarity)

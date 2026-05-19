@@ -57,13 +57,21 @@
                     🤍 <span th:text="${card.whiteMana}"></span>
                 </li>
             </ul>
-            <p><strong>Type:</strong> <span th:text="${card.type}"></span></p>
-            <p><strong>Supertype:</strong> <span th:text="${card.superType}"></span></p>
-            <p><strong>Subtype:</strong> <span th:text="${card.subType}"></span></p>
+
+
+            <p th:if="${card.superType != null}">
+                <strong>Supertype:</strong> <span th:text="${card.superType.displayValue}"></span></p>
+            <p><strong>Type:</strong> <span th:text="${card.type.displayValue}"></span></p>
+            <p th:if="${card.multiType != null}">
+                <strong>Multitype:</strong> <span th:text="${card.multiType.displayValue}"></span></p>
+            <p th:if="${card.subType != null and !#strings.isEmpty(card.subType)}">
+                <strong>Subtype:</strong> <span th:text="${card.subType}"></span></p>
             <p><strong>Set:</strong> <span th:text="${card.setName}"></span></p>
-            <p><strong>Rarity:</strong> <span th:text="${card.rarity}"></span></p>
-            <p><strong>Rule text:</strong> <span th:text="${card.ruleText}"></span></p>
-            <p><strong>Power/Toughness:</strong> <span th:text="${card.power}"></span>/<span th:text="${card.toughness}"></span></p>
+            <p><strong>Rarity:</strong> <span th:text="${card.rarity.displayValue}"></span></p>
+            <p th:if="${card.ruleText != null and !#strings.isEmpty(card.ruleText)}">
+                <strong>Rule text:</strong> <span th:text="${card.ruleText}"></span></p>
+            <p th:if="${card.power > 0 and card.toughness > 0}">
+                <strong>Power/Toughness:</strong> <span th:text="${card.power}"></span>/<span th:text="${card.toughness}"></span></p>
 
 
 

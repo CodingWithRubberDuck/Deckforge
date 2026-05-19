@@ -32,15 +32,16 @@
         <p>Klik på et kort for at se detaljer</p>
         <br>
 
+
         <article class="standard-top-search">
+            <a class="standard-button" th:href="@{/collection/add}">
+                Tilføj kort til samling
+            </a>
+
             <form th:action="@{/collection/search}" method="get">
                 <input type="text" name="name" th:value="${searchTerm}" placeholder="Søg efter navn på kort i samling">
                 <button type="submit" class="standard-button">Søg</button>
             </form>
-
-            <a class="standard-button" th:href="@{/collection/add}">
-                Tilføj kort til samling
-            </a>
         </article>
 
         <!-- Viser kort og man kan klikke ind på dem -->
