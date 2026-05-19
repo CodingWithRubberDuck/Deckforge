@@ -1,6 +1,7 @@
 Der skal tilpasses oplysninger i application.properties for at køre programmet og en database med navnet deck_forge skal oprettes i MySQL.
 
 Kontoer i systemet:
+
 Email: Frank@gmail.com
 Password: 1234frank
 (Rolle = admin)
