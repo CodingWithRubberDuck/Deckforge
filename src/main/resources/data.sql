@@ -88,8 +88,8 @@ VALUES (2, 'WIP', 'COMMANDER');
 
 
 --owned / collection
-INSERT INTO owned_card (card_id, user_id, card_condition)
-VALUES (11, 2, 'NEAR_MINT')
+INSERT INTO owned_card (card_id, user_id)
+VALUES (11, 2)
 
 
 

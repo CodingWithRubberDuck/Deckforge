@@ -108,7 +108,7 @@ public class CardController {
 
         Card card = service.getCardById(cardId); // henter kortet fra card_list
         model.addAttribute("card", card);
-        return "collection/detail-view";
+        return "/collection/detail-view-all";
     }
 
     @PostMapping("/collection/addCard")
@@ -128,18 +128,18 @@ public class CardController {
     }
 
 
-    /*
-    @PostMapping("/collection/addCard")
-    public String addCardToCollection(@RequestParam int cardId, HttpSession session) {
+    @GetMapping("/collection/owned/{ownedCardId}")
+    public String showOwnedCardDetails(@PathVariable int ownedCardId, HttpSession session, Model model) {
         AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
 
-        service.addCardToUserCollection(currentUser.getUserId(), cardId);
-        return "redirect:/collection/search";
+        OwnedCard ownedCard = service.getOwnedCardById(ownedCardId);
+        model.addAttribute("ownedCard", ownedCard);
+
+        return "/collection/detail-view-owned";
     }
-     */
 
 
 }

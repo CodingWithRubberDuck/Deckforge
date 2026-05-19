@@ -47,7 +47,7 @@
         <!-- Viser kort og man kan klikke ind på dem -->
         <section class="card-grid">
             <a class="card-item" th:each="card : ${cards}"
-               th:href="@{'/collection/card/' + ${card.cardId}}">
+               th:href="@{'/collection/owned/' + ${card.ownedCardId}}">
                 <img th:src="@{'/images/' + ${card.picture}}" alt="Card image">
             </a>
         </section>

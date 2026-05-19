@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Deckforge</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <meta name="description" content="Deckforge Hjemmeside">
+    <meta name="keywords" content="Magic, Magic the Gathering, Magic: The Gathering, MTG, MtG, mtg, Deckforge">
+    <meta name="author" content="???">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<header
+        th:replace="~{fragments/header :: header}">
+</header>
+
+
+<nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
+</nav>
+
+
+<main class="card-details-main">
+    <section class="card-details-container">
+
+        <div class="card-details-image">
+            <img th:src="@{'/images/' + ${ownedCard.picture}}" alt="Card image">
+        </div>
+
+
+
+        <div class="card-details-info">
+            <h2 th:text="${ownedCard.name}"></h2>
+            <p><strong>Mana cost:</strong></p>
+            <ul class="mana-list">
+                <li th:if="${ownedCard.neutralMana > 0}">
+                    ⚪ <span th:text="${ownedCard.neutralMana}"></span>
+                </li>
+                <li th:if="${ownedCard.blackMana > 0}">
+                    🖤 <span th:text="${ownedCard.blackMana}"></span>
+                </li>
+                <li th:if="${ownedCard.blueMana > 0}">
+                    💙 <span th:text="${ownedCard.blueMana}"></span>
+                </li>
+                <li th:if="${ownedCard.greenMana > 0}">
+                    💚 <span th:text="${ownedCard.greenMana}"></span>
+                </li>
+                <li th:if="${ownedCard.redMana > 0}">
+                    ❤️ <span th:text="${ownedCard.redMana}"></span>
+                </li>
+                <li th:if="${ownedCard.whiteMana > 0}">
+                    🤍 <span th:text="${ownedCard.whiteMana}"></span>
+                </li>
+            </ul>
+
+
+            <p th:if="${ownedCard.superType != null}">
+                <strong>Supertype:</strong> <span th:text="${ownedCard.superType.displayValue}"></span></p>
+            <p><strong>Type:</strong> <span th:text="${ownedCard.type.displayValue}"></span></p>
+            <p th:if="${ownedCard.multiType != null}">
+                <strong>Multitype:</strong> <span th:text="${ownedCard.multiType.displayValue}"></span></p>
+            <p th:if="${ownedCard.subType != null and !#strings.isEmpty(ownedCard.subType)}">
+                <strong>Subtype:</strong> <span th:text="${ownedCard.subType}"></span></p>
+            <p><strong>Set:</strong> <span th:text="${ownedCard.setName}"></span></p>
+            <p><strong>Rarity:</strong> <span th:text="${ownedCard.rarity.displayValue}"></span></p>
+            <p th:if="${ownedCard.ruleText != null and !#strings.isEmpty(ownedCard.ruleText)}">
+                <strong>Rule text:</strong> <span th:text="${ownedCard.ruleText}"></span></p>
+            <p th:if="${ownedCard.power > 0 and ownedCard.toughness > 0}">
+                <strong>Power/Toughness:</strong> <span th:text="${ownedCard.power}"></span>/<span th:text="${ownedCard.toughness}"></span></p>
+
+
+
+
+        </div>
+    </section>
+</main>
+
+
+
+<footer class="standard-footer"
+        th:insert="~{fragments/footer :: footer}">
+</footer>
+
+
+</body>
+
+
+</html>

@@ -91,7 +91,8 @@ public class MySQLCardRepository implements ICardRepository {
                     SELECT owned_card.owned_card_id, card_list.*
                     FROM owned_card
                     JOIN card_list ON owned_card.card_id = card_list.card_id
-                    WHERE owned_card.user_id = ? 
+                    WHERE owned_card.user_id = ?
+                    ORDER BY card_list.name ASC
                 """;
 
         try (Connection conn = databaseConfig.getConnection();
@@ -275,7 +276,74 @@ public class MySQLCardRepository implements ICardRepository {
         }
     }
 
+    @Override
+    public OwnedCard getOwnedCardById(int ownedCardId) {
 
+        String sql = """
+                    SELECT owned_card.*, card_list.*
+                    FROM owned_card
+                    JOIN card_list ON owned_card.card_id = card_list.card_id
+                    WHERE owned_card.owned_card_id = ?
+                """;
+
+        try (Connection conn = databaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, ownedCardId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                OwnedCard ownedCard = new OwnedCard();
+
+                ownedCard.setCardId(rs.getInt("card_id"));
+                ownedCard.setBlackMana(rs.getInt("black_mana"));
+                ownedCard.setBlueMana(rs.getInt("blue_mana"));
+                ownedCard.setGreenMana(rs.getInt("green_mana"));
+                ownedCard.setRedMana(rs.getInt("red_mana"));
+                ownedCard.setWhiteMana(rs.getInt("white_mana"));
+                ownedCard.setNeutralMana(rs.getInt("neutral_mana"));
+
+                ownedCard.setName(rs.getString("name"));
+
+                String superType = rs.getString("super_type");
+                if (superType != null) {
+                    ownedCard.setSuperType(SuperType.valueOf(superType));
+                }
+                ownedCard.setType(Type.valueOf(rs.getString("card_type")));
+                String multiType = rs.getString("multi_type");
+                if (multiType != null) {
+                    ownedCard.setMultiType(Type.valueOf(multiType));
+                }
+                ownedCard.setSubType(rs.getString("sub_type"));
+
+                ownedCard.setCanBeCommander(rs.getBoolean("can_be_commander"));
+                ownedCard.setPicture(rs.getString("picture"));
+                ownedCard.setSetName(rs.getString("set_name"));
+                ownedCard.setRuleText(rs.getString("rule_text"));
+                ownedCard.setToughness(rs.getInt("toughness"));
+                ownedCard.setPower(rs.getInt("power"));
+                String rarity = rs.getString("rarity");
+                if (rarity != null) {
+                    ownedCard.setRarity(Rarity.valueOf(rarity));
+                }
+
+                //ownedCard.setRarity(Rarity.valueOf(rs.getString("rarity")));
+
+                ownedCard.setOwnedCardId(rs.getInt("owned_card_id"));
+                ownedCard.setUserId(rs.getInt("user_id"));
+                ownedCard.setCondition(Condition.valueOf(rs.getString("card_condition")));
+                ownedCard.setFoil(rs.getString("foil"));
+
+                return ownedCard;
+            }
+
+        } catch (SQLException e) {
+            throw new DataAccessException("Kunne ikke hente owned card", e);
+        }
+
+        return null;
+    }
 }
+
 
 

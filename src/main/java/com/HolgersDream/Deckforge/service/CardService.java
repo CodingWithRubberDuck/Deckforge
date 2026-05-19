@@ -54,4 +54,8 @@ public class CardService {
     public Card getCardById(int cardId) {
         return repository.getCardById(cardId);
     }
+
+    public OwnedCard getOwnedCardById(int ownedCardId) {
+        return repository.getOwnedCardById(ownedCardId);
+    }
 }

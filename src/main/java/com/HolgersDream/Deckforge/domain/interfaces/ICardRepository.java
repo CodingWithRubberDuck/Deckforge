@@ -15,4 +15,5 @@ public interface ICardRepository {
     void addCardToCollection (OwnedCard ownedCard);
     List<Card> getAllCards();
     Card getCardById(int cardId);
+    OwnedCard getOwnedCardById(int ownedCardId);
 }
