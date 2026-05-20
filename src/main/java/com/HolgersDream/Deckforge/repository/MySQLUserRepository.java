@@ -39,22 +39,4 @@ public class MySQLUserRepository implements IUserRepository {
     }
 
 
-    public void updateLastLogin(int userId) {
-        String sql =
-                "UPDATE user " +
-                        "SET last_logged_in = ? , date_asked_for_delete = NULL " +
-                        "WHERE user_id = ?";
-
-        try (Connection con = databaseConfig.getConnection();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setDate(1, Date.valueOf(LocalDate.now()));
-            stmt.setInt(2, userId);
-
-            stmt.executeUpdate();
-
-        } catch (SQLException sqle) {
-            throw new DataAccessException("Der gik noget galt i forbindelse med databasen", sqle);
-        }
-    }
 }

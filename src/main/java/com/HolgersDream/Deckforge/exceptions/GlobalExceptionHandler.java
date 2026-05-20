@@ -32,6 +32,14 @@ public class GlobalExceptionHandler {
         return "error";
     }
 
+    @ExceptionHandler(NotAuthorizedException.class)
+    public String handleNotAuthorized(NotAuthorizedException nae, Model model){
+        model.addAttribute("type", "Adgangs-fejl");
+        model.addAttribute("errorMessage", nae.getMessage());
+        return "error";
+    }
+
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleIllegalStatement(IllegalArgumentException iae, Model model){
@@ -56,6 +64,12 @@ public class GlobalExceptionHandler {
     public String handleNewDeckValidation(NewDeckValidationException ndve, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("responseMessage", ndve.getMessage());
         return "redirect:/deck/add-deck";
+    }
+
+    @ExceptionHandler(EventValidationException.class)
+    public String handleEventValidation(EventValidationException eve, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", eve.getMessage());
+        return "redirect:/event/add-event";
     }
 
 

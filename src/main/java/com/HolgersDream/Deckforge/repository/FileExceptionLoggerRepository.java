@@ -37,7 +37,7 @@ public class FileExceptionLoggerRepository implements IExceptionLoggerRepository
     }
 
     private void setFilePath(){
-        this.filePath = "src\\main\\java\\com\\HolgersDream\\Deckforge\\exceptionlogs\\" + getLogName();
+        this.filePath = "logs\\" + getLogName();
     }
 
     private void setBackupFilePath(){

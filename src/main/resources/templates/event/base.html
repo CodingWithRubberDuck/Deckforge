@@ -29,14 +29,32 @@
 
     <article class="standard-main-article">
 
+
+
         <h2>Her kan du navigere rundt til forskellige event sider</h2>
         <br>
         <p>Her kan du se opkommende events:</p>
         <br>
-        <br>
         <form th:action="@{/event/future-events}" method="get">
             <button type="submit" class="standard-button" >Se kommende events</button>
         </form>
+        <br>
+        <br>
+        <p>Her kan du se de events du er tilmeldt:</p>
+        <br>
+        <form th:action="@{/event/registered-events}" method="get">
+            <button type="submit" class="standard-button" >Se tilmeldte events</button>
+        </form>
+
+        <section th:if="${role.name() == 'ORGANIZER' or role.name() == 'ADMIN'}">
+            <br>
+            <br>
+            <p>Her kan du oprette nye events:</p>
+            <br>
+            <form th:action="@{/event/add-event}" method="get">
+                <button type="submit" class="standard-button" >Opret nyt event</button>
+            </form>
+        </section>
 
 
     </article>

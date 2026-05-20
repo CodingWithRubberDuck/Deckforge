@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Deckforge</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <meta name="description" content="Deckforge Hjemmeside">
+    <meta name="keywords" content="Magic, Magic the Gathering, Magic: The Gathering, MTG, MtG, mtg, Deckforge">
+    <meta name="author" content="???">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+<header class="standard-header"
+        th:replace="~{fragments/header :: header}">
+</header>
+
+
+
+
+<nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
+</nav>
+
+
+
+<main class="standard-main">
+
+    <article class="standard-main-article">
+
+        <h2>Opret Nyt Event</h2>
+        <p>Indtast den relevante information, og klik på knappen:</p>
+        <br>
+        <!--Viser kun fejlmeddelse/border hvis den ikke er tom eller null -->
+        <section class="standard-warning-message" th:if="${responseMessage != null and !#strings.isEmpty(responseMessage)}">
+            <p th:text="${responseMessage}"></p>
+        </section>
+        <br>
+
+        <form th:action="@{/event/add-event}" method="post" th:object="${event}">
+            <label for="event-name">Indtast navn på event </label><br>
+            <input type="text" id="event-name" th:field="*{eventName}"  required><br><br>
+            <label for="max-slots">Indtast maksimale antal deltagere </label><br>
+            <input type="text" id="max-slots" th:field="*{maxSlots}" required><br><br>
+            <label for="location">Indtast lokation på event </label><br>
+            <input type="text" id="location" th:field="*{location}"  required><br><br>
+            <label for="start-time">Indtast start tidspunkt på event </label><br>
+            <input type="time" id="start-time" th:field="*{startTime}" required><br><br>
+            <label for="date">Indtast dato for event </label><br>
+            <input type="date" id="date" th:field="*{date}" placeholder="2026-12-31" required><br><br>
+
+
+            <br>
+            <button type="submit" class="standard-button" >Opret Event</button>
+        </form>
+
+    </article>
+</main>
+
+
+
+<footer class="standard-footer"
+        th:insert="~{fragments/footer :: footer}">
+</footer>
+
+
+</body>
+
+</html>

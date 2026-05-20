@@ -89,32 +89,4 @@ public class Event {
     public LocalDate getDate() {
         return date;
     }
-
-    /// Setters
-    /*
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
-    }
-
-    public void setMaxSlots(int maxSlots) {
-        this.maxSlots = maxSlots;
-    }
-
-    public void setAvailableSlots(int availableSlots) {
-        this.availableSlots = availableSlots;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-    */
-
 }

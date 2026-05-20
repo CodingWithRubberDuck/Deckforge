@@ -17,7 +17,7 @@ public class CardController {
 
     private final CardService service;
 
-    public CardController(CardService service, DatabaseConfig databaseConfig) {
+    public CardController(CardService service) {
         this.service = service;
     }
 

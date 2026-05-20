@@ -6,10 +6,7 @@ import com.HolgersDream.Deckforge.domain.interfaces.IEventRepository;
 import com.HolgersDream.Deckforge.exceptions.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -34,7 +31,8 @@ public class MySQLEventRepository implements IEventRepository {
                 LEFT JOIN user_participate_event upe
                 ON e.event_id = upe.event_id
                 Where e.date >= current_date()
-                GROUP BY e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date;
+                GROUP BY e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date
+                ORDER BY e.date;
                 """;
 
         try (Connection con = databaseConfig.getConnection();
@@ -53,6 +51,63 @@ public class MySQLEventRepository implements IEventRepository {
         } catch (SQLException sqle){
             throw new DataAccessException("Der gik noget galt i forbindelse med databasen", sqle);
         }
+    }
+
+    @Override
+    public Optional<List<Event>> findRegisteredEvents(int userId) {
+        String sql = """
+                SELECT e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date, max_slots - count(upe.user_id) as available_slots
+                FROM event e
+                LEFT JOIN user_participate_event upe
+                ON e.event_id = upe.event_id
+                Where e.date >= current_date() and upe.user_id = ?
+                GROUP BY e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date
+                ORDER BY e.date;
+                """;
+
+        try (Connection con = databaseConfig.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            List<Event> events = new ArrayList<>();
+
+            while(rs.next()){
+                events.add(mapRow(rs));
+            }
+
+            return Optional.of(events);
+
+        } catch (SQLException sqle){
+            throw new DataAccessException("Der gik noget galt i forbindelse med databasen", sqle);
+        }
+    }
+
+    @Override
+    public void addNewEvent(Event newEvent) {
+        String sql = """
+                INSERT INTO event (owner_id, event_name, max_slots, location, start_time, date)
+                VALUES (?, ?, ?, ?, ?, ?);
+                """;
+        try (Connection c = databaseConfig.getConnection();
+             PreparedStatement stmt = c.prepareStatement(sql)) {
+
+            stmt.setInt(1, newEvent.getOwnerId());
+            stmt.setString(2, newEvent.getEventName());
+            stmt.setInt(3, newEvent.getMaxSlots());
+            stmt.setString(4, newEvent.getLocation());
+            stmt.setTime(5, Time.valueOf(newEvent.getStartTime()));
+            stmt.setDate(6, Date.valueOf(newEvent.getDate()));
+
+            stmt.executeUpdate();
+
+        } catch (SQLException sqle) {
+            throw new DataAccessException("Der gik noget galt i forbindelse med at oprette et nyt deck", sqle);
+        }
+
+
     }
 
     private Event mapRow(ResultSet rs) throws SQLException{

@@ -1,5 +1,0 @@
-
-10:09:11 : Der gik noget galt i forbindelse med databasen
- SQLSyntaxErrorException : Unknown column 'name' in 'where clause'
-20:44:06 : Der gik noget galt i forbindelse med databasen
- SQLSyntaxErrorException : Unknown column 'name' in 'where clause'
