@@ -16,4 +16,5 @@ public interface ICardRepository {
     List<Card> getAllCards();
     Card getCardById(int cardId);
     OwnedCard getOwnedCardById(int ownedCardId);
+    void removeOwnedCard(int ownedCardId, int userId);
 }

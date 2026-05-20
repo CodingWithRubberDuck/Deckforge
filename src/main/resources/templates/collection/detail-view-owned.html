@@ -28,13 +28,13 @@
 <main class="card-details-main">
     <section class="card-details-container">
 
-        <div class="card-details-image">
+        <article class="card-details-image">
             <img th:src="@{'/images/' + ${ownedCard.picture}}" alt="Card image">
-        </div>
+        </article>
 
 
 
-        <div class="card-details-info">
+        <section class="card-details-info">
             <h2 th:text="${ownedCard.name}"></h2>
             <p><strong>Mana cost:</strong></p>
             <ul class="mana-list">
@@ -42,19 +42,19 @@
                     ⚪ <span th:text="${ownedCard.neutralMana}"></span>
                 </li>
                 <li th:if="${ownedCard.blackMana > 0}">
-                    🖤 <span th:text="${ownedCard.blackMana}"></span>
+                    💀 <span th:text="${ownedCard.blackMana}"></span>
                 </li>
                 <li th:if="${ownedCard.blueMana > 0}">
-                    💙 <span th:text="${ownedCard.blueMana}"></span>
+                    💧 <span th:text="${ownedCard.blueMana}"></span>
                 </li>
                 <li th:if="${ownedCard.greenMana > 0}">
-                    💚 <span th:text="${ownedCard.greenMana}"></span>
+                    🍃 <span th:text="${ownedCard.greenMana}"></span>
                 </li>
                 <li th:if="${ownedCard.redMana > 0}">
-                    ❤️ <span th:text="${ownedCard.redMana}"></span>
+                    🔥 <span th:text="${ownedCard.redMana}"></span>
                 </li>
                 <li th:if="${ownedCard.whiteMana > 0}">
-                    🤍 <span th:text="${ownedCard.whiteMana}"></span>
+                    🌞 <span th:text="${ownedCard.whiteMana}"></span>
                 </li>
             </ul>
 
@@ -70,13 +70,15 @@
             <p><strong>Rarity:</strong> <span th:text="${ownedCard.rarity.displayValue}"></span></p>
             <p th:if="${ownedCard.ruleText != null and !#strings.isEmpty(ownedCard.ruleText)}">
                 <strong>Rule text:</strong> <span th:text="${ownedCard.ruleText}"></span></p>
-            <p th:if="${ownedCard.power > 0 and ownedCard.toughness > 0}">
+            <p th:if="${ownedCard.power > 0 or ownedCard.toughness > 0}">
                 <strong>Power/Toughness:</strong> <span th:text="${ownedCard.power}"></span>/<span th:text="${ownedCard.toughness}"></span></p>
 
 
+            <form th:action="@{'/collection/remove/' + ${ownedCard.ownedCardId}}" method="post">
+                <button class="standard-button">Fjern fra samling</button>
+            </form>
 
-
-        </div>
+        </section>
     </section>
 </main>
 

@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -184,45 +186,14 @@ public class MySQLCardRepository implements ICardRepository {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Card card = new Card();
-
-                card.setCardId(rs.getInt("card_id"));
-                card.setBlackMana(rs.getInt("black_mana"));
-                card.setBlueMana(rs.getInt("blue_mana"));
-                card.setGreenMana(rs.getInt("green_mana"));
-                card.setRedMana(rs.getInt("red_mana"));
-                card.setWhiteMana(rs.getInt("white_mana"));
-                card.setNeutralMana(rs.getInt("neutral_mana"));
-
-                card.setName(rs.getString("name"));
-
-                String superType = rs.getString("super_type");
-                if (superType != null) {
-                    card.setSuperType(SuperType.valueOf(superType));
-                }
-                card.setType(Type.valueOf(rs.getString("card_type")));
-                String multiType = rs.getString("multi_type");
-                if (multiType != null) {
-                    card.setMultiType(Type.valueOf(multiType));
-                }
-                card.setSubType(rs.getString("sub_type"));
-
-                card.setCanBeCommander(rs.getBoolean("can_be_commander"));
-                card.setPicture(rs.getString("picture"));
-                card.setSetName(rs.getString("set_name"));
-                card.setRuleText(rs.getString("rule_text"));
-                card.setPower(rs.getInt("power"));
-                card.setToughness(rs.getInt("toughness"));
-                card.setRarity(Rarity.valueOf(rs.getString("rarity")));
-
-                cards.add(card);
+                cards.add(mapCard(rs));
             }
+
+            return cards;
 
         } catch (SQLException sqle) {
             throw new DataAccessException("Kunne ikke hente kort fra databasen", sqle);
         }
-
-        return cards;
     }
 
     public Card getCardById(int cardId) {
@@ -235,38 +206,7 @@ public class MySQLCardRepository implements ICardRepository {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Card card = new Card();
-
-                card.setCardId(rs.getInt("card_id"));
-                card.setBlackMana(rs.getInt("black_mana"));
-                card.setBlueMana(rs.getInt("blue_mana"));
-                card.setGreenMana(rs.getInt("green_mana"));
-                card.setRedMana(rs.getInt("red_mana"));
-                card.setWhiteMana(rs.getInt("white_mana"));
-                card.setNeutralMana(rs.getInt("neutral_mana"));
-
-                card.setName(rs.getString("name"));
-
-                String superType = rs.getString("super_type");
-                if (superType != null) {
-                    card.setSuperType(SuperType.valueOf(superType));
-                }
-                card.setType(Type.valueOf(rs.getString("card_type")));
-                String multiType = rs.getString("multi_type");
-                if (multiType != null) {
-                    card.setMultiType(Type.valueOf(multiType));
-                }
-                card.setSubType(rs.getString("sub_type"));
-
-                card.setCanBeCommander(rs.getBoolean("can_be_commander"));
-                card.setPicture(rs.getString("picture"));
-                card.setSetName(rs.getString("set_name"));
-                card.setRuleText(rs.getString("rule_text"));
-                card.setPower(rs.getInt("power"));
-                card.setToughness(rs.getInt("toughness"));
-                card.setRarity(Rarity.valueOf(rs.getString("rarity")));
-
-                return card;
+                return mapCard(rs);
             }
 
             return null;
@@ -293,48 +233,7 @@ public class MySQLCardRepository implements ICardRepository {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                OwnedCard ownedCard = new OwnedCard();
-
-                ownedCard.setCardId(rs.getInt("card_id"));
-                ownedCard.setBlackMana(rs.getInt("black_mana"));
-                ownedCard.setBlueMana(rs.getInt("blue_mana"));
-                ownedCard.setGreenMana(rs.getInt("green_mana"));
-                ownedCard.setRedMana(rs.getInt("red_mana"));
-                ownedCard.setWhiteMana(rs.getInt("white_mana"));
-                ownedCard.setNeutralMana(rs.getInt("neutral_mana"));
-
-                ownedCard.setName(rs.getString("name"));
-
-                String superType = rs.getString("super_type");
-                if (superType != null) {
-                    ownedCard.setSuperType(SuperType.valueOf(superType));
-                }
-                ownedCard.setType(Type.valueOf(rs.getString("card_type")));
-                String multiType = rs.getString("multi_type");
-                if (multiType != null) {
-                    ownedCard.setMultiType(Type.valueOf(multiType));
-                }
-                ownedCard.setSubType(rs.getString("sub_type"));
-
-                ownedCard.setCanBeCommander(rs.getBoolean("can_be_commander"));
-                ownedCard.setPicture(rs.getString("picture"));
-                ownedCard.setSetName(rs.getString("set_name"));
-                ownedCard.setRuleText(rs.getString("rule_text"));
-                ownedCard.setToughness(rs.getInt("toughness"));
-                ownedCard.setPower(rs.getInt("power"));
-                String rarity = rs.getString("rarity");
-                if (rarity != null) {
-                    ownedCard.setRarity(Rarity.valueOf(rarity));
-                }
-
-                //ownedCard.setRarity(Rarity.valueOf(rs.getString("rarity")));
-
-                ownedCard.setOwnedCardId(rs.getInt("owned_card_id"));
-                ownedCard.setUserId(rs.getInt("user_id"));
-                ownedCard.setCondition(Condition.valueOf(rs.getString("card_condition")));
-                ownedCard.setFoil(rs.getString("foil"));
-
-                return ownedCard;
+                return mapOwnedCard(rs);
             }
 
         } catch (SQLException e) {
@@ -343,7 +242,103 @@ public class MySQLCardRepository implements ICardRepository {
 
         return null;
     }
+
+    @Override
+    public void removeOwnedCard(int ownedCardId, int userId) {
+        String sql = """
+                DELETE FROM owned_card
+                WHERE owned_card_id = ? AND user_id = ?
+                """;
+
+        try (Connection con = databaseConfig.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, ownedCardId);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+
+        } catch (SQLException sqle) {
+            throw new DataAccessException("Kunne ikke fjerne kort fra samling", sqle);
+        }
+    }
+
+
+    private Card mapCard(ResultSet rs) throws SQLException {
+        return new Card(
+                rs.getInt("card_id"),
+                rs.getInt("black_mana"),
+                rs.getInt("blue_mana"),
+                rs.getInt("green_mana"),
+                rs.getInt("red_mana"),
+                rs.getInt("white_mana"),
+                rs.getInt("neutral_mana"),
+                rs.getString("name"),
+                checkSuperType(rs.getString("super_type")),
+                Type.valueOf(rs.getString("card_type")),
+                checkMultiType(rs.getString("multi_type")),
+                rs.getString("sub_type"),
+                rs.getBoolean("can_be_commander"),
+                rs.getString("picture"),
+                rs.getString("set_name"),
+                rs.getString("rule_text"),
+                rs.getInt("power"),
+                rs.getInt("toughness"),
+                Rarity.valueOf(rs.getString("rarity"))
+        );
+    }
+
+    private OwnedCard mapOwnedCard(ResultSet rs) throws SQLException {
+        return new OwnedCard(
+                rs.getInt("card_id"),
+                rs.getInt("black_mana"),
+                rs.getInt("blue_mana"),
+                rs.getInt("green_mana"),
+                rs.getInt("red_mana"),
+                rs.getInt("white_mana"),
+                rs.getInt("neutral_mana"),
+                rs.getString("name"),
+                checkSuperType(rs.getString("super_type")),
+                Type.valueOf(rs.getString("card_type")),
+                checkMultiType(rs.getString("multi_type")),
+                rs.getString("sub_type"),
+                rs.getBoolean("can_be_commander"),
+                rs.getString("picture"),
+                rs.getString("set_name"),
+                rs.getString("rule_text"),
+                rs.getInt("power"),
+                rs.getInt("toughness"),
+                Rarity.valueOf(rs.getString("rarity")),
+
+                rs.getInt("owned_card_id"),
+                rs.getInt("user_id"),
+                checkCondition(rs.getString("card_condition")),
+                rs.getString("foil")
+        );
+    }
+
+    private SuperType checkSuperType(String superType) {
+        if (superType == null) {
+            return null;
+        }
+        return SuperType.valueOf(superType);
+    }
+
+    private Type checkMultiType(String multiType) {
+        if (multiType == null) {
+            return null;
+        }
+        return Type.valueOf(multiType);
+    }
+
+    private Condition checkCondition(String condition) {
+        if (condition == null) {
+            return null;
+        }
+        return Condition.valueOf(condition);
+    }
 }
+
+
 
 
 

@@ -28,13 +28,13 @@
 <main class="card-details-main">
     <section class="card-details-container">
 
-        <div class="card-details-image">
+        <article class="card-details-image">
             <img th:src="@{'/images/' + ${card.picture}}" alt="Card image">
-        </div>
+        </article>
 
 
 
-        <div class="card-details-info">
+        <section class="card-details-info">
             <h2 th:text="${card.name}"></h2>
             <p><strong>Mana cost:</strong></p>
             <ul class="mana-list">
@@ -42,19 +42,19 @@
                     ⚪ <span th:text="${card.neutralMana}"></span>
                 </li>
                 <li th:if="${card.blackMana > 0}">
-                    🖤 <span th:text="${card.blackMana}"></span>
+                    💀 <span th:text="${card.blackMana}"></span>
                 </li>
                 <li th:if="${card.blueMana > 0}">
-                    💙 <span th:text="${card.blueMana}"></span>
+                    💧 <span th:text="${card.blueMana}"></span>
                 </li>
                 <li th:if="${card.greenMana > 0}">
-                    💚 <span th:text="${card.greenMana}"></span>
+                    🍃 <span th:text="${card.greenMana}"></span>
                 </li>
                 <li th:if="${card.redMana > 0}">
-                    ❤️ <span th:text="${card.redMana}"></span>
+                    🔥 <span th:text="${card.redMana}"></span>
                 </li>
                 <li th:if="${card.whiteMana > 0}">
-                    🤍 <span th:text="${card.whiteMana}"></span>
+                    🌞 <span th:text="${card.whiteMana}"></span>
                 </li>
             </ul>
 
@@ -70,7 +70,7 @@
             <p><strong>Rarity:</strong> <span th:text="${card.rarity.displayValue}"></span></p>
             <p th:if="${card.ruleText != null and !#strings.isEmpty(card.ruleText)}">
                 <strong>Rule text:</strong> <span th:text="${card.ruleText}"></span></p>
-            <p th:if="${card.power > 0 and card.toughness > 0}">
+            <p th:if="${card.power > 0 or card.toughness > 0}">
                 <strong>Power/Toughness:</strong> <span th:text="${card.power}"></span>/<span th:text="${card.toughness}"></span></p>
 
 
@@ -79,7 +79,7 @@
                 <input type="hidden" name="cardId" th:value="${card.cardId}">
                 <button type="submit" class="standard-button">Tilføj til samling</button>
             </form>
-        </div>
+        </section>
     </section>
 </main>
 

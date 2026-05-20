@@ -58,4 +58,8 @@ public class CardService {
     public OwnedCard getOwnedCardById(int ownedCardId) {
         return repository.getOwnedCardById(ownedCardId);
     }
+
+    public void removeCardFromCollection(int ownedCardId, int userId) {
+        repository.removeOwnedCard(ownedCardId, userId);
+    }
 }

@@ -142,4 +142,15 @@ public class CardController {
     }
 
 
+    @PostMapping("/collection/remove/{ownedCardId}")
+    public String removeOwnedCard(@PathVariable int ownedCardId, HttpSession session) {
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/authentication/login";
+        }
+
+        service.removeCardFromCollection(ownedCardId, currentUser.getUserId());
+
+        return "redirect:/collection/search";
+    }
 }
