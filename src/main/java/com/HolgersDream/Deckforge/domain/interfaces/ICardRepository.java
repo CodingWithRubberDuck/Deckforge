@@ -11,10 +11,11 @@ public interface ICardRepository {
     Optional<List<Deck>> findDecksById(int userId);
     void addDeckToUser(Deck newDeck);
     List<OwnedCard> getUserCardCollection(int userId);
-    List<OwnedCard> findCardByName(int userId, String name);
+    List<OwnedCard> findOwnedCardByName(int userId, String name);
     void addCardToCollection (OwnedCard ownedCard);
     List<Card> getAllCards();
     Card getCardById(int cardId);
     OwnedCard getOwnedCardById(int ownedCardId);
     void removeOwnedCard(int ownedCardId, int userId);
+    List<Card> findCardByName(String name);
 }

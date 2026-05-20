@@ -77,7 +77,7 @@ public class CardController {
             cards = service.getUserCollection(userId);
         } else {
             // Søg i samlingen
-            cards = service.findCardByName(userId, name);
+            cards = service.findOwnedCardByName(userId, name);
         }
 
         model.addAttribute("cards", cards);
@@ -152,5 +152,27 @@ public class CardController {
         service.removeCardFromCollection(ownedCardId, currentUser.getUserId());
 
         return "redirect:/collection/search";
+    }
+
+    @GetMapping("/collection/add/search")
+    public String searchAllCards(@RequestParam(required = false) String name, HttpSession session, Model model) {
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/authentication/login";
+        }
+
+        List<Card> cards;
+
+        if (name == null || name.isBlank()) {
+            // Vis hele samlingen
+            cards = service.getAllCards();
+        } else {
+            // Søg i kort
+            cards = service.findCardByName(name);
+        }
+
+        model.addAttribute("cards", cards);
+
+        return "/collection/add";
     }
 }

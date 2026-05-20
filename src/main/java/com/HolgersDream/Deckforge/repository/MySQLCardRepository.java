@@ -121,7 +121,7 @@ public class MySQLCardRepository implements ICardRepository {
     }
 
     @Override
-    public List<OwnedCard> findCardByName(int userId, String name) {
+    public List<OwnedCard> findOwnedCardByName(int userId, String name) {
         String sql = """
                 SELECT owned_card.owned_card_id, card_list.name, card_list.picture
                 FROM owned_card
@@ -130,7 +130,6 @@ public class MySQLCardRepository implements ICardRepository {
                   AND card_list.name LIKE ?
                 ORDER BY card_list.name ASC
                 """;
-
 
         try (Connection con = databaseConfig.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -196,6 +195,7 @@ public class MySQLCardRepository implements ICardRepository {
         }
     }
 
+    @Override
     public Card getCardById(int cardId) {
         String sql = "SELECT * FROM card_list WHERE card_id = ?";
 
@@ -259,6 +259,30 @@ public class MySQLCardRepository implements ICardRepository {
 
         } catch (SQLException sqle) {
             throw new DataAccessException("Kunne ikke fjerne kort fra samling", sqle);
+        }
+    }
+
+    @Override
+    public List<Card> findCardByName(String name) {
+        List<Card> cards = new ArrayList<>();
+
+        String sql = "SELECT * FROM card_list WHERE name LIKE ?";
+
+        try (Connection con = databaseConfig.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + name + "%");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                cards.add(mapCard(rs));
+            }
+
+            return cards;
+
+        } catch (SQLException sqle) {
+            throw new DataAccessException("Kunne ikke søge efter kort", sqle);
         }
     }
 

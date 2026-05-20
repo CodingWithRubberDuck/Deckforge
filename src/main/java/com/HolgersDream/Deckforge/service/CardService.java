@@ -39,8 +39,8 @@ public class CardService {
         return repository.getUserCardCollection(userId);
     }
 
-    public List<OwnedCard> findCardByName(int userId, String name) {
-        return repository.findCardByName(userId, name);
+    public List<OwnedCard> findOwnedCardByName(int userId, String name) {
+        return repository.findOwnedCardByName(userId, name);
     }
 
     public void addCardToCollection(OwnedCard ownedCard) {
@@ -61,5 +61,9 @@ public class CardService {
 
     public void removeCardFromCollection(int ownedCardId, int userId) {
         repository.removeOwnedCard(ownedCardId, userId);
+    }
+
+    public List<Card> findCardByName(String name){
+        return repository.findCardByName(name);
     }
 }

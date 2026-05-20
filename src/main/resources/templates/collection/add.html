@@ -32,6 +32,12 @@
         <p>Klik på et kort for at se detaljer og tilføj det til din samling</p>
         <br>
 
+        <article class="standard-top-search">
+            <form th:action="@{/collection/add/search}" method="get">
+                <input type="text" name="name" placeholder="Søg efter navn på kort">
+                <button type="submit" class="standard-button">Søg</button>
+            </form>
+        </article>
 
         <!-- Viser kort og man kan klikke ind på dem -->
         <section class="card-grid">
