@@ -12,4 +12,6 @@ public interface IEventRepository {
     void addNewEvent(Event event);
     Optional<Event> findEventById(int eventId);
     Optional<List<User>> findEventParticipants(int eventId);
+    void addUserToEvent(int userId, int eventId);
+    void removeUserFromEvent(int userId, int eventId);
 }

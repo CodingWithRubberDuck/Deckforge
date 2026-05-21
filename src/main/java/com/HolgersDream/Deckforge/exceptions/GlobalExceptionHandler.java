@@ -40,10 +40,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoEventFoundException.class)
-    public String handleNoEventFound(NoEventFoundException nefe, Model model){
-        model.addAttribute("type", "Event blev ikke fundet");
-        model.addAttribute("errorMessage", nefe.getMessage());
-        return "error";
+    public String handleNoEventFound(NoEventFoundException nefe, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", nefe.getMessage());
+        return "redirect:/event/base";
+    }
+
+    @ExceptionHandler(ParticipateEventException.class)
+    public String handleParticipateEvent(ParticipateEventException pee, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", pee.getMessage());
+        return "redirect:/event/base";
     }
 
 

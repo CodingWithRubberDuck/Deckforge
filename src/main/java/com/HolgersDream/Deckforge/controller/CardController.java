@@ -15,14 +15,16 @@ import java.util.Optional;
 public class CardController {
 
     private final CardService service;
+    private final SessionObjectRetriever sessionObjectRetriever;
 
-    public CardController(CardService service) {
+    public CardController(CardService service, SessionObjectRetriever sessionObjectRetriever) {
         this.service = service;
+        this.sessionObjectRetriever = sessionObjectRetriever;
     }
 
     @GetMapping("/deck/personal-decks")
     public String getPersonalDecks(HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
@@ -37,7 +39,7 @@ public class CardController {
 
     @GetMapping("/deck/add-deck")
     public String showAddDeck(HttpSession session, Model model){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -48,7 +50,7 @@ public class CardController {
 
     @PostMapping("/deck/add-deck")
     public String tryToAddDeck(HttpSession session, @ModelAttribute DeckRequest deckRequest){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -62,7 +64,7 @@ public class CardController {
 
     @GetMapping("/collection/search")
     public String showAndSearchCollection(@RequestParam(required = false) String name, HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
@@ -86,7 +88,7 @@ public class CardController {
 
     @GetMapping("/collection/add")
     public String showAddableCards(HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
@@ -100,7 +102,7 @@ public class CardController {
 
     @GetMapping("/collection/card/{cardId}")
     public String showCardDetails(@PathVariable int cardId, HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
@@ -112,7 +114,7 @@ public class CardController {
 
     @PostMapping("/collection/addCard")
     public String addCardToCollection(@RequestParam int cardId, HttpSession session) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
@@ -129,7 +131,7 @@ public class CardController {
 
     @GetMapping("/collection/owned/{ownedCardId}")
     public String showOwnedCardDetails(@PathVariable int ownedCardId, HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
@@ -143,7 +145,7 @@ public class CardController {
 
     @PostMapping("/collection/remove/{ownedCardId}")
     public String removeOwnedCard(@PathVariable int ownedCardId, HttpSession session) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
@@ -155,7 +157,7 @@ public class CardController {
 
     @GetMapping("/collection/add/search")
     public String searchAllCards(@RequestParam(required = false) String name, HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }

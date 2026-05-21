@@ -237,6 +237,14 @@ input {
     border-radius: 8px;
 }
 
+.standard-confirm-message p {
+    padding: 0.8rem 1.5rem;
+    border: #6B6767 1px solid;
+    background-color: #158507;
+    border-radius: 8px;
+}
+
+
 .standard-top-search {
     display: flex;
     flex-direction: column;

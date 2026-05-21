@@ -33,6 +33,16 @@
 
         <h2>Her kan du navigere rundt til forskellige event sider</h2>
         <br>
+        <section class="standard-warning-message" th:if="${responseMessage != null and !#strings.isEmpty(responseMessage)}">
+            <br>
+            <p th:text="${responseMessage}"></p>
+            <br>
+        </section>
+        <section class="standard-confirm-message" th:if="${confirmMessage != null and !#strings.isEmpty(confirmMessage)}">
+            <br>
+            <p th:text="${confirmMessage}"></p>
+            <br>
+        </section>
         <p>Her kan du se opkommende events:</p>
         <br>
         <form th:action="@{/event/future-events}" method="get">

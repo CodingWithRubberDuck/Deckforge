@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     private final UserService service;
+    private final SessionObjectRetriever sessionObjectRetriever;
 
-    public UserController(UserService service){
+    public UserController(UserService service, SessionObjectRetriever sessionObjectRetriever){
         this.service = service;
+        this.sessionObjectRetriever = sessionObjectRetriever;
     }
 
     @GetMapping("/personal/profile")
     public String showProfile(HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -30,7 +32,7 @@ public class UserController {
 
     @GetMapping("/personal/deregister")
     public String showDeregister(HttpSession session){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -39,7 +41,7 @@ public class UserController {
 
     @PostMapping("/personal/deregister")
     public String markToDelete(HttpSession session){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }

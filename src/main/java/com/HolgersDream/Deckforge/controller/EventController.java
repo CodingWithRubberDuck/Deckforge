@@ -7,10 +7,8 @@ import com.HolgersDream.Deckforge.service.EventService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +18,16 @@ import java.util.Optional;
 public class EventController {
 
     private final EventService service;
+    private final SessionObjectRetriever sessionObjectRetriever;
 
-    public EventController(EventService service){
+    public EventController(EventService service, SessionObjectRetriever sessionObjectRetriever){
         this.service = service;
+        this.sessionObjectRetriever = sessionObjectRetriever;
     }
 
     @GetMapping("/event/base")
     public String showEventBase(HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -37,7 +37,7 @@ public class EventController {
 
     @GetMapping("/event/future-events")
     public String showComingEvents(HttpSession session, Model model){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -53,7 +53,7 @@ public class EventController {
 
     @GetMapping("/event/registered-events")
     public String showRegisteredEvents(HttpSession session, Model model){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -70,7 +70,7 @@ public class EventController {
 
     @GetMapping("/event/add-event")
     public String addNewEvent(HttpSession session, Model model){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -85,7 +85,7 @@ public class EventController {
 
     @PostMapping("/event/add-event")
     public String tryToAddEvent(HttpSession session, @ModelAttribute EventRequest eventRequest){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -95,7 +95,7 @@ public class EventController {
 
     @GetMapping("/event/details/{eventId}")
     public String showSpecificEvent(@PathVariable int eventId, HttpSession session, Model model){
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null){
             return "redirect:/authentication/login";
         }
@@ -107,6 +107,28 @@ public class EventController {
         model.addAttribute("isParticipating", isParticipating);
 
         return "event/details";
+    }
+
+    @PostMapping("/event/join")
+    public String tryJoinEvent(HttpSession session, RedirectAttributes redirectAttributes, @RequestParam int eventId){
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
+        if (currentUser == null){
+            return "redirect:/authentication/login";
+        }
+        Event event = service.checkJoinEvent(currentUser.getUserId(), eventId);
+        redirectAttributes.addFlashAttribute("confirmMessage", "Du er blevet tilmeldt til eventet " + event.getEventName());
+        return "redirect:/event/base";
+    }
+
+    @PostMapping("/event/leave")
+    public String tryLeaveEvent(HttpSession session, RedirectAttributes redirectAttributes, @RequestParam int eventId){
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
+        if (currentUser == null){
+            return "redirect:/authentication/login";
+        }
+        Event event = service.checkLeaveEvent(currentUser.getUserId(), eventId);
+        redirectAttributes.addFlashAttribute("confirmMessage", "Du er blevet afmeldt fra eventet " + event.getEventName());
+        return "redirect:/event/base";
     }
 
 

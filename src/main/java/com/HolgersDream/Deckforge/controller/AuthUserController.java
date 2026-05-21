@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthUserController {
 
     private final AuthUserService service;
+    private final SessionObjectRetriever sessionObjectRetriever;
 
-    public AuthUserController(AuthUserService service) {
+    public AuthUserController(AuthUserService service, SessionObjectRetriever sessionObjectRetriever) {
         this.service = service;
+        this.sessionObjectRetriever = sessionObjectRetriever;
     }
 
     @GetMapping("/")
@@ -51,7 +53,7 @@ public class AuthUserController {
 
     @GetMapping("/welcome")
     public String showWelcome(HttpSession session, Model model) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
@@ -71,7 +73,7 @@ public class AuthUserController {
 
     @GetMapping("/return")
     public String returnBack(HttpSession session) {
-        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
         if (currentUser == null) {
             return "redirect:/";
         } else {

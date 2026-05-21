@@ -172,8 +172,44 @@ public class MySQLEventRepository implements IEventRepository {
         } catch (SQLException sqle){
             throw new DataAccessException("Der gik noget galt i forbindelse med databasen", sqle);
         }
+    }
 
+    @Override
+    public void addUserToEvent(int userId, int eventId) {
+        String sql = """
+                INSERT INTO user_participate_event (user_id, event_id)
+                VALUES (?, ?);
+                """;
+        try (Connection c = databaseConfig.getConnection();
+             PreparedStatement stmt = c.prepareStatement(sql)) {
 
+            stmt.setInt(1, userId);
+            stmt.setInt(2, eventId);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException sqle) {
+            throw new DataAccessException("Der gik noget galt i forbindelse med at tilmelde en bruger", sqle);
+        }
+    }
+
+    @Override
+    public void removeUserFromEvent(int userId, int eventId) {
+        String sql = """
+                DELETE FROM user_participate_event
+                WHERE user_id = ? AND event_id = ?;
+                """;
+        try (Connection c = databaseConfig.getConnection();
+             PreparedStatement stmt = c.prepareStatement(sql)) {
+
+            stmt.setInt(1, userId);
+            stmt.setInt(2, eventId);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException sqle) {
+            throw new DataAccessException("Der gik noget galt i forbindelse med at tilmelde en bruger", sqle);
+        }
     }
 
     private Event mapEvent(ResultSet rs) throws SQLException{

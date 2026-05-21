@@ -9,6 +9,7 @@ import com.HolgersDream.Deckforge.domain.interfaces.IEventRepository;
 import com.HolgersDream.Deckforge.exceptions.EventValidationException;
 import com.HolgersDream.Deckforge.exceptions.NoEventFoundException;
 import com.HolgersDream.Deckforge.exceptions.NotAuthorizedException;
+import com.HolgersDream.Deckforge.exceptions.ParticipateEventException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +47,42 @@ public class EventService {
     }
 
     public Event getSpecificEvent(int eventId){
+        return handleGetSpecificEvent(eventId);
+    }
+
+    public Event checkJoinEvent(int userId, int eventId){
+        Event retrievedEvent = handleGetSpecificEvent(eventId);
+        if (retrievedEvent.getAvailableSlots() <= 0){
+            throw new ParticipateEventException("Der er desværre ikke ledige pladser tilbage til eventet " + retrievedEvent.getEventName());
+        }
+        if (checkAlreadyParticipant(userId, retrievedEvent.getParticipants())){
+            throw new ParticipateEventException("Du er allerede tilmeldt eventet " + retrievedEvent.getEventName());
+        }
+        repository.addUserToEvent(userId, eventId);
+        return retrievedEvent;
+    }
+
+
+    public Event checkLeaveEvent(int userId, int eventId){
+        Event retrievedEvent = handleGetSpecificEvent(eventId);
+        if (!checkAlreadyParticipant(userId, retrievedEvent.getParticipants())){
+            throw new ParticipateEventException("Du er ikke tilmeldt eventet " + retrievedEvent.getEventName() + " og kan derfor ikke afmelde dig");
+        }
+        repository.removeUserFromEvent(userId, eventId);
+        return retrievedEvent;
+    }
+
+
+    public boolean checkAlreadyParticipant(int userId, List<User> participants){
+        for (User participant : participants){
+            if (participant.getUserId() == userId){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Event handleGetSpecificEvent(int eventId){
         Event specificEvent;
         Optional<Event> eventResult = repository.findEventById(eventId);
         if (eventResult.isEmpty()){
@@ -58,14 +95,5 @@ public class EventService {
             specificEvent.getParticipants().addAll(usersResult.get());
         }
         return specificEvent;
-    }
-
-    public boolean checkAlreadyParticipant(int userId, List<User> participants){
-        for (User participant : participants){
-            if (participant.getUserId() == userId){
-                return true;
-            }
-        }
-        return false;
     }
 }
