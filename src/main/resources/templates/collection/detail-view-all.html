@@ -28,10 +28,11 @@
 <main class="card-details-main">
     <section class="card-details-container">
 
+        <a th:href="@{/collection/add}" class="back-button">Tilbage</a>
+
         <article class="card-details-image">
             <img th:src="@{'/images/' + ${card.picture}}" alt="Card image">
         </article>
-
 
 
         <section class="card-details-info">
