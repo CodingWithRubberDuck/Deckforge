@@ -20,8 +20,8 @@ public class Card {
     private String picture;
     private String setName;
     private String ruleText;
-    private int toughness;
     private int power;
+    private int toughness;
     private Rarity rarity;
 
     public Card() {
@@ -30,7 +30,7 @@ public class Card {
     public Card(int cardId, int blackMana, int blueMana, int greenMana, int redMana, int whiteMana,
                 int neutralMana, String name, SuperType superType, Type type, Type multiType,
                 String subType, boolean canBeCommander, String picture, String setName, String ruleText,
-                int toughness, int power, Rarity rarity) {
+                int power, int toughness, Rarity rarity) {
         this.cardId = cardId;
         this.blackMana = blackMana;
         this.blueMana = blueMana;
@@ -50,8 +50,8 @@ public class Card {
         this.picture = picture;
         this.setName = setName;
         this.ruleText = ruleText;
-        this.toughness = toughness;
         this.power = power;
+        this.toughness = toughness;
         this.rarity = rarity;
     }
 
