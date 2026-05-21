@@ -4,8 +4,10 @@ import com.HolgersDream.Deckforge.controller.EventRequest;
 import com.HolgersDream.Deckforge.domain.AuthSessionUser;
 import com.HolgersDream.Deckforge.domain.Event;
 import com.HolgersDream.Deckforge.domain.Role;
+import com.HolgersDream.Deckforge.domain.User;
 import com.HolgersDream.Deckforge.domain.interfaces.IEventRepository;
 import com.HolgersDream.Deckforge.exceptions.EventValidationException;
+import com.HolgersDream.Deckforge.exceptions.NoEventFoundException;
 import com.HolgersDream.Deckforge.exceptions.NotAuthorizedException;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,29 @@ public class EventService {
             throw new EventValidationException(iae.getMessage());
         }
         repository.addNewEvent(newEvent);
+    }
+
+    public Event getSpecificEvent(int eventId){
+        Event specificEvent;
+        Optional<Event> eventResult = repository.findEventById(eventId);
+        if (eventResult.isEmpty()){
+            throw new NoEventFoundException("Eventet du forsøgte at se detaljer om eksisterer ikke");
+        } else {
+            specificEvent = eventResult.get();
+        }
+        Optional<List<User>> usersResult = repository.findEventParticipants(eventId);
+        if (usersResult.isPresent()){
+            specificEvent.getParticipants().addAll(usersResult.get());
+        }
+        return specificEvent;
+    }
+
+    public boolean checkAlreadyParticipant(int userId, List<User> participants){
+        for (User participant : participants){
+            if (participant.getUserId() == userId){
+                return true;
+            }
+        }
+        return false;
     }
 }

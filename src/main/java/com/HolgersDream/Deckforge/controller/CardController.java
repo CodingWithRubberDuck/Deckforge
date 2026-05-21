@@ -1,6 +1,5 @@
 package com.HolgersDream.Deckforge.controller;
 
-import com.HolgersDream.Deckforge.config.DatabaseConfig;
 import com.HolgersDream.Deckforge.domain.*;
 import com.HolgersDream.Deckforge.service.CardService;
 import jakarta.servlet.http.HttpSession;

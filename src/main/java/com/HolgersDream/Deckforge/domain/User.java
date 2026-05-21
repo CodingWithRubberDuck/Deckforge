@@ -1,7 +1,5 @@
 package com.HolgersDream.Deckforge.domain;
 
-import java.time.LocalDate;
-
 public class User {
     private int userId;
     private String name;
@@ -12,7 +10,7 @@ public class User {
 
     //Base Chain Constructor kald
     //Constructor uden password (Skal muligvis bruges i fremtiden til at vise brugere som deltager i et event)
-    public User(int userId, String name, String email, Role role){
+    public User(int userId, String name, Role role){
         if (userId <= 0){
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt id");
         }
@@ -22,11 +20,6 @@ public class User {
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt navn");
         }
         this.name = name.trim();
-
-        if (email == null || email.isBlank()){
-            throw new IllegalArgumentException("Brugeren har ikke en gyldig email");
-        }
-        this.email = email.trim();
 
         if (role == null){
             throw new IllegalArgumentException("Brugeren har ikke en gyldig rolle");
@@ -39,7 +32,12 @@ public class User {
     //Konstruktør med alle værdier
     public User(int userId, String name, String email, String password, Role role) {
         //Chain constructor kald
-        this(userId, name, email, role);
+        this(userId, name, role);
+
+        if (email == null || email.isBlank()){
+            throw new IllegalArgumentException("Brugeren har ikke en gyldig email");
+        }
+        this.email = email.trim();
 
         if (password == null || password.isBlank()){
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt kodeord");

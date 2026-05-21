@@ -2,6 +2,8 @@ package com.HolgersDream.Deckforge.repository;
 
 import com.HolgersDream.Deckforge.config.DatabaseConfig;
 import com.HolgersDream.Deckforge.domain.Event;
+import com.HolgersDream.Deckforge.domain.Role;
+import com.HolgersDream.Deckforge.domain.User;
 import com.HolgersDream.Deckforge.domain.interfaces.IEventRepository;
 import com.HolgersDream.Deckforge.exceptions.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -43,7 +45,7 @@ public class MySQLEventRepository implements IEventRepository {
             List<Event> events = new ArrayList<>();
 
             while(rs.next()){
-                events.add(mapRow(rs));
+                events.add(mapEvent(rs));
             }
 
             return Optional.of(events);
@@ -75,7 +77,7 @@ public class MySQLEventRepository implements IEventRepository {
             List<Event> events = new ArrayList<>();
 
             while(rs.next()){
-                events.add(mapRow(rs));
+                events.add(mapEvent(rs));
             }
 
             return Optional.of(events);
@@ -106,11 +108,75 @@ public class MySQLEventRepository implements IEventRepository {
         } catch (SQLException sqle) {
             throw new DataAccessException("Der gik noget galt i forbindelse med at oprette et nyt deck", sqle);
         }
+    }
+
+    @Override
+    public Optional<Event> findEventById(int eventId) {
+        String sql = """
+                SELECT e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date, max_slots - count(upe.user_id) as available_slots
+                FROM event e
+                LEFT JOIN user_participate_event upe
+                ON e.event_id = upe.event_id
+                Where e.event_id = ?
+                GROUP BY e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date;
+                """;
+
+        try (Connection c = databaseConfig.getConnection();
+             PreparedStatement stmt = c.prepareStatement(sql)) {
+
+            stmt.setInt(1, eventId);
+
+
+            try (ResultSet rs = stmt.executeQuery()){
+                if (rs.next()){
+                    return Optional.of(mapEvent(rs));
+                }
+                return Optional.empty();
+            }
+
+
+        } catch (SQLException sqle) {
+            throw new DataAccessException("Der gik noget galt i forbindelse med at finde oplysninger om det specifikke event", sqle);
+        }
+    }
+
+    @Override
+    public Optional<List<User>> findEventParticipants(int eventId) {
+        String sql = """
+                SELECT u.user_id, name, role
+                FROM user u
+                JOIN user_participate_event upe
+                ON u.user_id = upe.user_id
+                WHERE upe.event_id = ?
+                GROUP BY u.user_id, u.name, u.role;
+                """;
+        try (Connection con = databaseConfig.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, eventId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            List<User> participants = new ArrayList<>();
+
+            while(rs.next()){
+                 participants.add(new User(
+                         rs.getInt("user_id"),
+                         rs.getString("name"),
+                         Role.valueOf(rs.getString("role"))
+                 ));
+            }
+
+            return Optional.of(participants);
+
+        } catch (SQLException sqle){
+            throw new DataAccessException("Der gik noget galt i forbindelse med databasen", sqle);
+        }
 
 
     }
 
-    private Event mapRow(ResultSet rs) throws SQLException{
+    private Event mapEvent(ResultSet rs) throws SQLException{
         return new Event(
                 rs.getInt("event_id"),
                 rs.getInt("owner_id"),

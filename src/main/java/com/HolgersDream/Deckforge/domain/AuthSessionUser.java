@@ -1,7 +1,5 @@
 package com.HolgersDream.Deckforge.domain;
 
-import java.time.LocalDate;
-
 public class AuthSessionUser {
     private final int userId;
     private final String name;

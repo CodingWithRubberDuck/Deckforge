@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
@@ -90,6 +91,22 @@ public class EventController {
         }
         service.checkAddEvent(eventRequest, currentUser);
         return "redirect:/event/base";
+    }
+
+    @GetMapping("/event/details/{eventId}")
+    public String showSpecificEvent(@PathVariable int eventId, HttpSession session, Model model){
+        AuthSessionUser currentUser = (AuthSessionUser) session.getAttribute("currentUser");
+        if (currentUser == null){
+            return "redirect:/authentication/login";
+        }
+        Event event = service.getSpecificEvent(eventId);
+
+        boolean isParticipating = service.checkAlreadyParticipant(currentUser.getUserId(), event.getParticipants());
+
+        model.addAttribute("event", event);
+        model.addAttribute("isParticipating", isParticipating);
+
+        return "event/details";
     }
 
 

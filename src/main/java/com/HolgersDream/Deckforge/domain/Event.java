@@ -2,6 +2,8 @@ package com.HolgersDream.Deckforge.domain;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Event {
     private int eventId;
@@ -12,6 +14,7 @@ public class Event {
     private String location;
     private LocalTime startTime;
     private LocalDate date;
+    private List<User> participants;
 
 
     public Event(int eventId, int ownerId, String eventName, int maxSlots, int availableSlots, String location,
@@ -55,6 +58,8 @@ public class Event {
             throw new IllegalArgumentException("Et event skal have en start dato i fremtiden eller nutiden");
         }
         this.date = date;
+
+        this.participants = new ArrayList<>();
     }
 
     /// Getters
@@ -88,5 +93,9 @@ public class Event {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public List<User> getParticipants(){
+        return participants;
     }
 }
