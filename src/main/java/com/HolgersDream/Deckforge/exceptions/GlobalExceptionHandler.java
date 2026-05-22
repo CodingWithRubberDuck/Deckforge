@@ -51,6 +51,12 @@ public class GlobalExceptionHandler {
         return "redirect:/event/base";
     }
 
+    @ExceptionHandler(NoCardFoundException.class)
+    public String handleNoCardFound(NoCardFoundException ncfe, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", ncfe.getMessage());
+        return "redirect:/collection/search";
+    }
+
 
 
     @ExceptionHandler(IllegalArgumentException.class)

@@ -32,6 +32,12 @@
         <p>Klik på et kort for at se detaljer</p>
         <br>
 
+        <section class="standard-warning-message" th:if="${responseMessage != null and !#strings.isEmpty(responseMessage)}">
+            <br>
+            <p th:text="${responseMessage}"></p>
+            <br>
+        </section>
+
 
         <article class="standard-top-search">
             <a class="standard-button" th:href="@{/collection/add}">
