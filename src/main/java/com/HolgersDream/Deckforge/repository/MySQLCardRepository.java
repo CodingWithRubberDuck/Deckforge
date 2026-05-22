@@ -194,7 +194,7 @@ public class MySQLCardRepository implements ICardRepository {
     }
 
     @Override
-    public Card getCardById(int cardId) {
+    public Optional<Card> getCardById(int cardId) {
         String sql = "SELECT * FROM card_list WHERE card_id = ?";
 
         try (Connection con = databaseConfig.getConnection();
@@ -204,10 +204,9 @@ public class MySQLCardRepository implements ICardRepository {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return mapCard(rs);
+                return Optional.of(mapCard(rs));
             }
-
-            return null;
+            return Optional.empty();
 
         } catch (SQLException sqle) {
             throw new DataAccessException("Kunne ikke hente kort detaljer", sqle);
@@ -215,7 +214,7 @@ public class MySQLCardRepository implements ICardRepository {
     }
 
     @Override
-    public OwnedCard getOwnedCardById(int ownedCardId) {
+    public Optional<OwnedCard> getOwnedCardById(int ownedCardId) {
 
         String sql = """
                     SELECT owned_card.*, card_list.*
@@ -231,14 +230,13 @@ public class MySQLCardRepository implements ICardRepository {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                return mapOwnedCard(rs);
+                return Optional.of(mapOwnedCard(rs));
             }
+            return Optional.empty();
 
         } catch (SQLException e) {
             throw new DataAccessException("Kunne ikke hente owned card", e);
         }
-
-        return null;
     }
 
     @Override

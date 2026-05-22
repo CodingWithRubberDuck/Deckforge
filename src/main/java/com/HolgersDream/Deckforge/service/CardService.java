@@ -6,6 +6,7 @@ import com.HolgersDream.Deckforge.domain.Deck;
 import com.HolgersDream.Deckforge.domain.OwnedCard;
 import com.HolgersDream.Deckforge.domain.interfaces.ICardRepository;
 import com.HolgersDream.Deckforge.exceptions.NewDeckValidationException;
+import com.HolgersDream.Deckforge.exceptions.NoCardFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,11 +53,19 @@ public class CardService {
     }
 
     public Card getCardById(int cardId) {
-        return repository.getCardById(cardId);
+        Optional<Card> card = repository.getCardById(cardId);
+        if (card.isPresent()) {
+            return card.get();
+        }
+        throw new NoCardFoundException("Det søgte kort blev ikke fundet");
     }
 
     public OwnedCard getOwnedCardById(int ownedCardId) {
-        return repository.getOwnedCardById(ownedCardId);
+        Optional<OwnedCard> result = repository.getOwnedCardById(ownedCardId);
+        if (result.isPresent()) {
+            return result.get();
+        }
+        throw new NoCardFoundException("Det søgte egede kort blev ikke fundet");
     }
 
     public void removeCardFromCollection(int ownedCardId, int userId) {
