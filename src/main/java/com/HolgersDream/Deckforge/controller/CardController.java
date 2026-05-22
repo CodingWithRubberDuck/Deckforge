@@ -28,11 +28,8 @@ public class CardController {
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
-        List<Deck> decks = new ArrayList<>();
-        Optional<List<Deck>> result = service.getUserDecks(currentUser.getUserId());
-        if (result.isPresent()){
-            decks = result.get();
-        }
+        List<Deck> decks = service.getUserDecks(currentUser.getUserId());
+
         model.addAttribute("decks", decks);
         return "/deck/personal-decks";
     }

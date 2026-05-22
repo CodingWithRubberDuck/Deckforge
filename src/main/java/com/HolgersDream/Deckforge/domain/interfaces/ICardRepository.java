@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICardRepository {
-    Optional<List<Deck>> findDecksById(int userId);
+    List<Deck> findDecksById(int userId);
     void addDeckToUser(Deck newDeck);
     List<OwnedCard> getUserCardCollection(int userId);
     List<OwnedCard> findOwnedCardByName(int userId, String name);

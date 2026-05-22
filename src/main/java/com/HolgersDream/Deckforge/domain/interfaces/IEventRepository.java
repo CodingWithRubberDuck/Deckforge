@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IEventRepository {
-    Optional<List<Event>> findComingEvents();
-    Optional<List<Event>> findRegisteredEvents(int userId);
+    List<Event> findComingEvents();
+    List<Event> findRegisteredEvents(int userId);
     void addNewEvent(Event event);
     Optional<Event> findEventById(int eventId);
-    Optional<List<User>> findEventParticipants(int eventId);
+    List<User> findEventParticipants(int eventId);
     void addUserToEvent(int userId, int eventId);
     void removeUserFromEvent(int userId, int eventId);
 }

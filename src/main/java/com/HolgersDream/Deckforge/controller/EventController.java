@@ -42,11 +42,8 @@ public class EventController {
             return "redirect:/authentication/login";
         }
 
-        List<Event> events = new ArrayList<>();
-        Optional<List<Event>> result = service.findTheComingEvents();
-        if (result.isPresent()){
-            events = result.get();
-        }
+        List<Event> events = service.findTheComingEvents();
+
         model.addAttribute("events", events);
         return "/event/future-events";
     }
@@ -58,11 +55,8 @@ public class EventController {
             return "redirect:/authentication/login";
         }
 
-        List<Event> events = new ArrayList<>();
-        Optional<List<Event>> result = service.findTheRegisteredEvents(currentUser.getUserId());
-        if (result.isPresent()){
-            events = result.get();
-        }
+        List<Event> events = service.findTheRegisteredEvents(currentUser.getUserId());
+
         model.addAttribute("events", events);
         return "/event/registered-events";
     }

@@ -24,7 +24,7 @@ public class MySQLCardRepository implements ICardRepository {
     }
 
     @Override
-    public Optional<List<Deck>> findDecksById(int userId) {
+    public List<Deck> findDecksById(int userId) {
         String sql = """
                 SELECT d.deck_id, d.user_id, d.deck_name, d.format, count(dcc.card_id) as card_amount
                 from deck d
@@ -54,8 +54,7 @@ public class MySQLCardRepository implements ICardRepository {
                 );
                 decks.add(deck);
             }
-
-            return Optional.of(decks);
+            return decks;
 
         } catch (SQLException sqle) {
             throw new DataAccessException("Der gik noget galt i forbindelse med at finde listen af deck", sqle);

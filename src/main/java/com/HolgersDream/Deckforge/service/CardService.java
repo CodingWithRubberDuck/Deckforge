@@ -5,7 +5,7 @@ import com.HolgersDream.Deckforge.domain.Card;
 import com.HolgersDream.Deckforge.domain.Deck;
 import com.HolgersDream.Deckforge.domain.OwnedCard;
 import com.HolgersDream.Deckforge.domain.interfaces.ICardRepository;
-import com.HolgersDream.Deckforge.exceptions.NewDeckValidationException;
+import com.HolgersDream.Deckforge.exceptions.DeckValidationException;
 import com.HolgersDream.Deckforge.exceptions.NoCardFoundException;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class CardService {
         this.repository = repository;
     }
 
-    public Optional<List<Deck>> getUserDecks(int userId){
+    public List<Deck> getUserDecks(int userId){
         return repository.findDecksById(userId);
     }
 
@@ -30,7 +30,7 @@ public class CardService {
         try {
             newDeck = new Deck(0, deckRequest.getUserId(), 0, deckRequest.getDeckName(), deckRequest.getFormat());
         } catch (IllegalArgumentException iae){
-            throw new NewDeckValidationException(iae.getMessage());
+            throw new DeckValidationException(iae.getMessage());
         }
         repository.addDeckToUser(newDeck);
     }

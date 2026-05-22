@@ -26,7 +26,7 @@ public class MySQLEventRepository implements IEventRepository {
 
 
     @Override
-    public Optional<List<Event>> findComingEvents() {
+    public List<Event> findComingEvents() {
         String sql = """
                 SELECT e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date, max_slots - count(upe.user_id) as available_slots
                 FROM event e
@@ -38,32 +38,39 @@ public class MySQLEventRepository implements IEventRepository {
                 """;
 
         try (Connection con = databaseConfig.getConnection();
-            PreparedStatement stmt = con.prepareStatement(sql)) {
+             PreparedStatement stmt = con.prepareStatement(sql)) {
 
             ResultSet rs = stmt.executeQuery();
 
             List<Event> events = new ArrayList<>();
 
-            while(rs.next()){
+            while (rs.next()) {
                 events.add(mapEvent(rs));
             }
 
-            return Optional.of(events);
+            return events;
 
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             throw new DataAccessException("Der gik noget galt i forbindelse med databasen", sqle);
         }
     }
 
     @Override
-    public Optional<List<Event>> findRegisteredEvents(int userId) {
+    public List<Event> findRegisteredEvents(int userId) {
         String sql = """
-                SELECT e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date, max_slots - count(upe.user_id) as available_slots
+                SELECT
+                e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time,
+                e.date, e.max_slots - COUNT(upe_left.user_id) AS available_slots
                 FROM event e
-                LEFT JOIN user_participate_event upe
-                ON e.event_id = upe.event_id
-                Where e.date >= current_date() and upe.user_id = ?
-                GROUP BY e.event_id, e.owner_id, e.event_name, e.max_slots, e.location, e.start_time, e.date
+                JOIN user_participate_event upe_in
+                ON upe_in.event_id = e.event_id
+                AND upe_in.user_id = ?
+                LEFT JOIN user_participate_event upe_left
+                ON e.event_id = upe_left.event_id
+                WHERE e.date >= CURRENT_DATE()
+                GROUP BY
+                e.event_id, e.owner_id, e.event_name, e.max_slots,
+                e.location, e.start_time, e.date
                 ORDER BY e.date;
                 """;
 
@@ -76,13 +83,13 @@ public class MySQLEventRepository implements IEventRepository {
 
             List<Event> events = new ArrayList<>();
 
-            while(rs.next()){
+            while (rs.next()) {
                 events.add(mapEvent(rs));
             }
 
-            return Optional.of(events);
+            return events;
 
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             throw new DataAccessException("Der gik noget galt i forbindelse med databasen", sqle);
         }
     }
@@ -127,8 +134,8 @@ public class MySQLEventRepository implements IEventRepository {
             stmt.setInt(1, eventId);
 
 
-            try (ResultSet rs = stmt.executeQuery()){
-                if (rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
                     return Optional.of(mapEvent(rs));
                 }
                 return Optional.empty();
@@ -141,7 +148,7 @@ public class MySQLEventRepository implements IEventRepository {
     }
 
     @Override
-    public Optional<List<User>> findEventParticipants(int eventId) {
+    public List<User> findEventParticipants(int eventId) {
         String sql = """
                 SELECT u.user_id, name, role
                 FROM user u
@@ -159,17 +166,17 @@ public class MySQLEventRepository implements IEventRepository {
 
             List<User> participants = new ArrayList<>();
 
-            while(rs.next()){
-                 participants.add(new User(
-                         rs.getInt("user_id"),
-                         rs.getString("name"),
-                         Role.valueOf(rs.getString("role"))
-                 ));
+            while (rs.next()) {
+                participants.add(new User(
+                        rs.getInt("user_id"),
+                        rs.getString("name"),
+                        Role.valueOf(rs.getString("role"))
+                ));
             }
 
-            return Optional.of(participants);
+            return participants;
 
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             throw new DataAccessException("Der gik noget galt i forbindelse med databasen", sqle);
         }
     }
@@ -212,7 +219,7 @@ public class MySQLEventRepository implements IEventRepository {
         }
     }
 
-    private Event mapEvent(ResultSet rs) throws SQLException{
+    private Event mapEvent(ResultSet rs) throws SQLException {
         return new Event(
                 rs.getInt("event_id"),
                 rs.getInt("owner_id"),
@@ -222,7 +229,7 @@ public class MySQLEventRepository implements IEventRepository {
                 rs.getString("location"),
                 LocalTime.parse(rs.getString("start_time")),
                 LocalDate.parse(rs.getString("date"))
-                );
+        );
     }
 }
 

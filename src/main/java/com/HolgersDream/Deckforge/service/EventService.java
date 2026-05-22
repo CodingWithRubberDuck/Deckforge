@@ -12,6 +12,7 @@ import com.HolgersDream.Deckforge.exceptions.NotAuthorizedException;
 import com.HolgersDream.Deckforge.exceptions.ParticipateEventException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +25,11 @@ public class EventService {
         this.repository = repository;
     }
 
-    public Optional<List<Event>> findTheComingEvents(){
+    public List<Event> findTheComingEvents(){
         return repository.findComingEvents();
     }
 
-    public Optional<List<Event>> findTheRegisteredEvents(int userId){
+    public List<Event> findTheRegisteredEvents(int userId){
         return repository.findRegisteredEvents(userId);
     }
 
@@ -42,6 +43,9 @@ public class EventService {
             newEvent = new Event(0, sessionUser.getUserId(), eventRequest.getEventName(), eventRequest.getMaxSlots(), eventRequest.getMaxSlots(), eventRequest.getLocation(), eventRequest.getStartTime(), eventRequest.getDate());
         } catch (IllegalArgumentException iae){
             throw new EventValidationException(iae.getMessage());
+        }
+        if (newEvent.getDate().isBefore(LocalDate.now())){
+            throw new EventValidationException("Et event kan ikke oprettes i fortiden");
         }
         repository.addNewEvent(newEvent);
     }
@@ -58,6 +62,7 @@ public class EventService {
         if (checkAlreadyParticipant(userId, retrievedEvent.getParticipants())){
             throw new ParticipateEventException("Du er allerede tilmeldt eventet " + retrievedEvent.getEventName());
         }
+        checkDateOfEvent(retrievedEvent);
         repository.addUserToEvent(userId, eventId);
         return retrievedEvent;
     }
@@ -68,6 +73,7 @@ public class EventService {
         if (!checkAlreadyParticipant(userId, retrievedEvent.getParticipants())){
             throw new ParticipateEventException("Du er ikke tilmeldt eventet " + retrievedEvent.getEventName() + " og kan derfor ikke afmelde dig");
         }
+        checkDateOfEvent(retrievedEvent);
         repository.removeUserFromEvent(userId, eventId);
         return retrievedEvent;
     }
@@ -90,10 +96,13 @@ public class EventService {
         } else {
             specificEvent = eventResult.get();
         }
-        Optional<List<User>> usersResult = repository.findEventParticipants(eventId);
-        if (usersResult.isPresent()){
-            specificEvent.getParticipants().addAll(usersResult.get());
-        }
+        specificEvent.getParticipants().addAll(repository.findEventParticipants(eventId));
         return specificEvent;
+    }
+
+    private void checkDateOfEvent(Event event){
+        if (event.getDate().isBefore(LocalDate.now())){
+            throw new ParticipateEventException("Eventet du tilgår er allerede forbi");
+        }
     }
 }
