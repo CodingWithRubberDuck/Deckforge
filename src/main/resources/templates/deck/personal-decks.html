@@ -32,6 +32,13 @@
             <h2>Liste af egne decks</h2>
             <p>Tilføj et nyt deck eller rediger allerede oprettede:</p>
             <br>
+            <!--Viser kun fejlmeddelse/border hvis den ikke er tom eller null -->
+            <section class="standard-warning-message" th:if="${responseMessage != null and !#strings.isEmpty(responseMessage)}">
+                <br>
+                <p th:text="${responseMessage}"></p>
+                <br>
+            </section>
+
             <form th:action="@{/deck/add-deck}" method="get">
                 <button type="submit" class="standard-button" >Tilføj nyt Deck</button>
             </form>
@@ -42,7 +49,7 @@
                     <p th:text="${deck.cardAmount}"></p>
                     <p th:text="${deck.format.displayValue}"></p>
                     <br>
-                    <form th:action="@{/deck/edit-deck/{id}(id=${deck.deckId})}"  method="get">
+                    <form th:action="@{/deck/deck-details/{deckId}(deckId=${deck.deckId})}"  method="get">
                         <button type="submit" class="standard-button">Detaljer og Rediger</button>
                     </form>
                 </section>

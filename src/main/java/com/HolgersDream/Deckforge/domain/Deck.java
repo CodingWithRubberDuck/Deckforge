@@ -1,11 +1,15 @@
 package com.HolgersDream.Deckforge.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Deck {
     private int deckId;
     private int userId;
     private int cardAmount;
     private String deckName;
     private Format format;
+    private List<DeckCard> cards;
 
 
 
@@ -30,6 +34,8 @@ public class Deck {
             throw new IllegalArgumentException("Et deck skal have tildelt et format");
         }
         this.format = format;
+
+        this.cards = new ArrayList<>();
     }
 
     /// Getters
@@ -53,5 +59,7 @@ public class Deck {
         return format;
     }
 
-
+    public List<DeckCard> getCards() {
+        return cards;
+    }
 }

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Deckforge</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <meta name="description" content="Deckforge Hjemmeside">
+    <meta name="keywords" content="Magic, Magic the Gathering, Magic: The Gathering, MTG, MtG, mtg, Deckforge">
+    <meta name="author" content="???">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<header
+        th:replace="~{fragments/header :: header}">
+</header>
+
+
+<nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
+</nav>
+
+
+<main class="card-details-main">
+    <section class="card-details-container">
+
+        <a th:href="@{/deck/add-cards-list/{deckId}(deckId=${deck.deckId})}" class="back-button">Tilbage</a>
+
+        <article class="card-details-image">
+            <img th:src="@{'/images/' + ${card.picture}}" alt="Card image">
+        </article>
+
+
+        <section class="card-details-info">
+            <h2 th:text="${card.name}"></h2>
+            <p><strong>Mana cost:</strong></p>
+            <ul class="mana-list">
+                <li th:if="${card.neutralMana > 0}">
+                    ⚪ <span th:text="${card.neutralMana}"></span>
+                </li>
+                <li th:if="${card.blackMana > 0}">
+                    💀 <span th:text="${card.blackMana}"></span>
+                </li>
+                <li th:if="${card.blueMana > 0}">
+                    💧 <span th:text="${card.blueMana}"></span>
+                </li>
+                <li th:if="${card.greenMana > 0}">
+                    🍃 <span th:text="${card.greenMana}"></span>
+                </li>
+                <li th:if="${card.redMana > 0}">
+                    🔥 <span th:text="${card.redMana}"></span>
+                </li>
+                <li th:if="${card.whiteMana > 0}">
+                    🌞 <span th:text="${card.whiteMana}"></span>
+                </li>
+            </ul>
+
+
+            <p th:if="${card.superType != null}">
+                <strong>Supertype:</strong> <span th:text="${card.superType.displayValue}"></span></p>
+            <p><strong>Type:</strong> <span th:text="${card.type.displayValue}"></span></p>
+            <p th:if="${card.multiType != null}">
+                <strong>Multitype:</strong> <span th:text="${card.multiType.displayValue}"></span></p>
+            <p th:if="${card.subType != null and !#strings.isEmpty(card.subType)}">
+                <strong>Subtype:</strong> <span th:text="${card.subType}"></span></p>
+            <p><strong>Set:</strong> <span th:text="${card.setName}"></span></p>
+            <p><strong>Rarity:</strong> <span th:text="${card.rarity.displayValue}"></span></p>
+            <p th:if="${card.ruleText != null and !#strings.isEmpty(card.ruleText)}">
+                <strong>Rule text:</strong> <span th:text="${card.ruleText}"></span></p>
+            <p th:if="${card.canBeCommander == true}">
+                <strong>Kan være commander: </strong><span>Ja</span></p>
+            <p th:if="${card.power > 0 or card.toughness > 0}">
+                <strong>Power/Toughness:</strong> <span th:text="${card.power}"></span>/<span th:text="${card.toughness}"></span></p>
+
+
+
+            <form th:action="@{/deck/add-card-generic/{deckId}/{cardId}(deckId=${deck.deckId}, cardId=${card.cardId})}" method="post">
+                <button type="submit" class="standard-button">Tilføj kort</button>
+            </form>
+
+            <section th:if="${canAddCommander == true}">
+                <form th:action="@{/deck/add-card-commander/{deckId}/{cardId}(deckId=${deck.deckId}, cardId=${card.cardId})}"  method="post">
+                    <button type="submit" class="standard-button">Tilføj som commander</button>
+                </form>
+            </section>
+        </section>
+    </section>
+</main>
+
+
+
+<footer class="standard-footer"
+        th:insert="~{fragments/footer :: footer}">
+</footer>
+
+
+</body>
+
+
+</html>

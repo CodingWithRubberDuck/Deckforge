@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <title>Deckforge</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <meta charset="UTF-8">
+    <meta name="description" content="Deckforge Hjemmeside">
+    <meta name="keywords" content="Magic, Magic the Gathering, Magic: The Gathering, MTG, MtG, mtg, Deckforge">
+    <meta name="author" content="???">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<header
+        th:replace="~{fragments/header :: header}">
+</header>
+
+
+<nav
+        th:insert="~{fragments/post-navbar :: post-navbar}">
+</nav>
+
+
+<main class="standard-main">
+    <article class="standard-main-article">
+
+        <h2>Alle kort</h2>
+        <p>Klik på et kort for at se detaljer og tilføj kortet til det valgte deck</p>
+
+        <section class="standard-confirm-message" th:if="${confirmMessage != null and !#strings.isEmpty(confirmMessage)}">
+            <br>
+            <p th:text="${confirmMessage}"></p>
+            <br>
+        </section>
+        <article class="decks-container">
+            <section class="specific-deck-container">
+                <p th:text="${deck.deckName}"></p>
+                <p th:text="${deck.cardAmount}"></p>
+                <p th:text="${deck.format.displayValue}"></p>
+                <br>
+            </section>
+        </article>
+        <br>
+
+        <article class="standard-top-search">
+            <form th:action="@{/deck/add-cards-list/{deckId}(deckId=${deck.deckId})}" method="get">
+                <input type="text" name="name" placeholder="Søg efter navn på kort">
+                <button type="submit" class="standard-button">Søg</button>
+            </form>
+        </article>
+
+        <!-- Viser kort og man kan klikke ind på dem -->
+        <section class="card-grid">
+            <a class="card-item" th:each="card : ${cards}"
+               th:href="@{/deck/add-card-detail/{deckId}/{cardId}(deckId=${deck.deckId}, cardId=${card.cardId})}">
+                <img th:src="@{'/images/' + ${card.picture}}" alt="Card image">
+            </a>
+        </section>
+
+    </article>
+</main>
+
+
+<footer class="standard-footer"
+        th:insert="~{fragments/footer :: footer}">
+</footer>
+
+
+</body>
+
+
+</html>

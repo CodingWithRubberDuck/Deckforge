@@ -1,62 +1,24 @@
 package com.HolgersDream.Deckforge.controller;
 
 import com.HolgersDream.Deckforge.domain.*;
-import com.HolgersDream.Deckforge.service.CardService;
+import com.HolgersDream.Deckforge.service.CollectionService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
-public class CardController {
+public class CollectionController {
 
-    private final CardService service;
+    private final CollectionService service;
     private final SessionObjectRetriever sessionObjectRetriever;
 
-    public CardController(CardService service, SessionObjectRetriever sessionObjectRetriever) {
+    public CollectionController(CollectionService service, SessionObjectRetriever sessionObjectRetriever) {
         this.service = service;
         this.sessionObjectRetriever = sessionObjectRetriever;
     }
-
-    @GetMapping("/deck/personal-decks")
-    public String getPersonalDecks(HttpSession session, Model model) {
-        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
-        if (currentUser == null) {
-            return "redirect:/authentication/login";
-        }
-        List<Deck> decks = service.getUserDecks(currentUser.getUserId());
-
-        model.addAttribute("decks", decks);
-        return "/deck/personal-decks";
-    }
-
-    @GetMapping("/deck/add-deck")
-    public String showAddDeck(HttpSession session, Model model){
-        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
-        if (currentUser == null){
-            return "redirect:/authentication/login";
-        }
-        model.addAttribute("deck", new DeckRequest());
-        model.addAttribute("format", Format.values());
-        return "deck/add-deck";
-    }
-
-    @PostMapping("/deck/add-deck")
-    public String tryToAddDeck(HttpSession session, @ModelAttribute DeckRequest deckRequest){
-        AuthSessionUser currentUser = sessionObjectRetriever.getSessionUser(session);
-        if (currentUser == null){
-            return "redirect:/authentication/login";
-        }
-        deckRequest.setUserId(currentUser.getUserId());
-        service.checkAddDeck(deckRequest);
-        return "redirect:/deck/personal-decks";
-    }
-
-
 
 
     @GetMapping("/collection/search")
@@ -166,7 +128,7 @@ public class CardController {
             cards = service.getAllCards();
         } else {
             // Søg i kort
-            cards = service.findCardByName(name);
+            cards = service.findCardsByName(name);
         }
 
         model.addAttribute("cards", cards);

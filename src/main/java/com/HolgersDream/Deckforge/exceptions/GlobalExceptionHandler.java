@@ -51,12 +51,36 @@ public class GlobalExceptionHandler {
         return "redirect:/event/base";
     }
 
-    @ExceptionHandler(NoCardFoundException.class)
-    public String handleNoCardFound(NoCardFoundException ncfe, RedirectAttributes redirectAttributes){
+    @ExceptionHandler(NoCollectionCardFoundException.class)
+    public String handleNoCardFound(NoCollectionCardFoundException ncfe, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("responseMessage", ncfe.getMessage());
         return "redirect:/collection/search";
     }
 
+    @ExceptionHandler(NoDeckFoundException.class)
+    public String handleNoDeckFound(NoDeckFoundException ndfe, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", ndfe.getMessage());
+        return "redirect:/deck/personal-decks";
+    }
+
+    @ExceptionHandler(DeckCardAddException.class)
+    public String handleNoDeckCardFound(DeckCardAddException ndcfe, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", ndcfe.getMessage());
+        return "redirect:/deck/personal-decks";
+    }
+
+
+    @ExceptionHandler(DeckAccessException.class)
+    public String handleDeckAccess(DeckAccessException dae, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", dae.getMessage());
+        return "redirect:/deck/personal-decks";
+    }
+
+    @ExceptionHandler(DeckCardValidationException.class)
+    public String handleDeckCardValidation(DeckCardValidationException dcve, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("responseMessage", dcve.getMessage());
+        return "redirect:/deck/personal-decks";
+    }
 
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -95,6 +119,7 @@ public class GlobalExceptionHandler {
     public String handleNoResourceFound(NoResourceFoundException nrfe, Model model){
         model.addAttribute("type", "Ukendt side");
         model.addAttribute("errorMessage", "Siden eller resourcen du prøvede at få fat på virker ikke til at eksistere");
+
         return "error";
     }
 

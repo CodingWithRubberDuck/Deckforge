@@ -1,21 +1,12 @@
 package com.HolgersDream.Deckforge.domain.interfaces;
 
 import com.HolgersDream.Deckforge.domain.Card;
-import com.HolgersDream.Deckforge.domain.Deck;
-import com.HolgersDream.Deckforge.domain.OwnedCard;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ICardRepository {
-    List<Deck> findDecksById(int userId);
-    void addDeckToUser(Deck newDeck);
-    List<OwnedCard> getUserCardCollection(int userId);
-    List<OwnedCard> findOwnedCardByName(int userId, String name);
-    void addCardToCollection (OwnedCard ownedCard);
     List<Card> getAllCards();
     Optional<Card> getCardById(int cardId);
-    Optional<OwnedCard> getOwnedCardById(int ownedCardId);
-    void removeOwnedCard(int ownedCardId, int userId);
-    List<Card> findCardByName(String name);
+    List<Card> findCardsByName(String name);
 }

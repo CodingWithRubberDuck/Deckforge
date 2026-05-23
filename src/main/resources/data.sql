@@ -84,7 +84,7 @@ VALUES (2, 'Goofy', 'COMMANDER');
 
 --deck contain card
 INSERT INTO deck_contain_card (deck_id, card_id, is_commander)
-VALUES (1, 12, true);
+VALUES (1, 13, true);
 
 --deck
 INSERT INTO deck (user_id, deck_name, format)

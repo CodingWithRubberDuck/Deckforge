@@ -55,6 +55,7 @@ body {
     border: #4d4d4d 1px solid;
     border-radius: 5px;
     position: relative;
+    z-index: 1;
 }
 
 .standard-nav {
