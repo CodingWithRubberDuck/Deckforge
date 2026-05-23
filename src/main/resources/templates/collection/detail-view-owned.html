@@ -72,6 +72,8 @@
             <p><strong>Rarity:</strong> <span th:text="${ownedCard.rarity.displayValue}"></span></p>
             <p th:if="${ownedCard.ruleText != null and !#strings.isEmpty(ownedCard.ruleText)}">
                 <strong>Rule text:</strong> <span th:text="${ownedCard.ruleText}"></span></p>
+            <p th:if="${ownedCard.canBeCommander == true}">
+                <strong>Kan være commander: </strong><span>Ja</span></p>
             <p th:if="${ownedCard.power > 0 or ownedCard.toughness > 0}">
                 <strong>Power/Toughness:</strong> <span th:text="${ownedCard.power}"></span>/<span th:text="${ownedCard.toughness}"></span></p>
 
