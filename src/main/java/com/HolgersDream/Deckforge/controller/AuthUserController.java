@@ -57,6 +57,9 @@ public class AuthUserController {
         if (currentUser == null) {
             return "redirect:/authentication/login";
         }
+
+        model.addAttribute("currentUser", currentUser);
+
         return "welcome";
     }
 

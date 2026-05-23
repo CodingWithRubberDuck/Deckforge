@@ -400,6 +400,16 @@ input {
     border-radius: 5px;
 }
 
+#welcomeImage {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+}
+
+.about-main-article a {
+    color: #9FC5FF;
+}
 
 /* Footer definitioner */
 .standard-footer {
