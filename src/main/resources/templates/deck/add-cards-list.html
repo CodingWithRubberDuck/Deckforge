@@ -28,23 +28,31 @@
 <main class="standard-main">
     <article class="standard-main-article">
 
+        <a th:href="@{/deck/deck-details}" class="back-button">Tilbage</a>
+
         <h2>Alle kort</h2>
         <p>Klik på et kort for at se detaljer og tilføj kortet til det valgte deck</p>
+        <br>
+
 
         <section class="standard-confirm-message" th:if="${confirmMessage != null and !#strings.isEmpty(confirmMessage)}">
             <br>
             <p th:text="${confirmMessage}"></p>
             <br>
         </section>
-        <article class="decks-container">
-            <section class="specific-deck-container">
-                <p th:text="${deck.deckName}"></p>
-                <p th:text="${deck.cardAmount}"></p>
-                <p th:text="${deck.format.displayValue}"></p>
-                <br>
+
+
+        <article class="deck-box-single">
+            <section class="deck-box-content">
+
+                <h3 th:text="${deck.deckName}"></h3>
+                <p><strong>Kort:</strong> <span th:text="${deck.cardAmount}"></span></p>
+                <p><strong>Format:</strong> <span th:text="${deck.format.displayValue}"></span></p>
+
             </section>
         </article>
         <br>
+
 
         <article class="standard-top-search">
             <form th:action="@{/deck/add-cards-list/{deckId}(deckId=${deck.deckId})}" method="get">
@@ -52,6 +60,7 @@
                 <button type="submit" class="standard-button">Søg</button>
             </form>
         </article>
+
 
         <!-- Viser kort og man kan klikke ind på dem -->
         <section class="card-grid">

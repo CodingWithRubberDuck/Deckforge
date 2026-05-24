@@ -266,11 +266,97 @@ input {
 
 
 /*Deck */
-.decks-container {
-    padding: 2rem;
-    padding-bottom: 6rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* Deck grid layout */
+.deck-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Deck box styling */
+.deck-box {
+    background-color: #212121;
+    border: 1px solid #4d4d4d;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 1.5rem;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.deck-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+/* Deck box content box */
+.deck-box-content h3 {
+    color: #9FC5FF;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.deck-box-content p {
+    margin: 0.3rem 0;
+    color: #D9D9D9;
+}
+
+/* Deck box single content */
+.deck-box-single {
+    background-color: #212121;
+    border: 1px solid #4d4d4d;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 1.5rem;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Event grid layout */
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Event box styling */
+.event-box {
+    background-color: #212121;
+    border: 1px solid #4d4d4d;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 1.5rem;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+/* Event box content */
+.event-box-content h3 {
+    color: #9FC5FF;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-box-content p {
+    margin: 0.3rem 0;
+    color: #D9D9D9;
+}
+
+.event-box-single {
+    background-color: #212121;
+    border: 1px solid #4d4d4d;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 1.5rem;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .specific-deck-container {
@@ -280,6 +366,27 @@ input {
     border-radius: 10px;
     border: #787878 1px solid;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Deltagerliste */
+.participant-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* Deltager box */
+.participant-box {
+    background-color: #212121;
+    border: 1px solid #4d4d4d;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 1rem;
+    text-align: center;
+    color: #fff;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .drop-down {
@@ -439,7 +546,6 @@ input {
 
 
 /* Responsive definitioner */
-
 @media (max-width: 768px) {
     .standard-header {
         height: 40px;
@@ -495,4 +601,23 @@ input {
         width: fit-content;
 
     }
+
+    .deck-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .deck-box {
+        padding: 1rem;
+    }
+
+    .event-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .event-box {
+        padding: 1rem;
+    }
+
 }

@@ -29,20 +29,35 @@
     <main class="standard-main">
 
         <article class="standard-main-article">
+
+            <a th:href="@{/event/base}" class="back-button">Tilbage</a>
+
             <h2>Dine Tilmeldte Events:</h2>
             <br>
-            <section class="event-container" th:each="event : ${events}">
-                <p th:text="${event.eventName}"></p>
-                <p th:text="${event.maxSlots}"></p>
-                <p th:text="${event.availableSlots}"></p>
-                <p th:text="${event.location}"></p>
-                <p th:text="${event.startTime}"></p>
-                <p th:text="${event.date}"></p>
 
-                <form th:action="@{/event/details/{eventId}(eventId=${event.eventId})}"  method="get">
-                    <button type="submit" class="standard-button">Detaljer</button>
-                </form>
+
+            <section class="event-grid">
+
+                <section class="event-box" th:each="event : ${events}">
+
+                    <section class="event-box-content">
+                        <h3 th:text="${event.eventName}"></h3>
+                        <p><strong>Maks. pladser:</strong> <span th:text="${event.maxSlots}"></span></p>
+                        <p><strong>Ledige pladser:</strong> <span th:text="${event.availableSlots}"></span></p>
+                        <p><strong>Adresse:</strong> <span th:text="${event.location}"></span></p>
+                        <p><strong>Tid:</strong> <span th:text="${event.startTime}"></span></p>
+                        <p><strong>Dato:</strong> <span th:text="${event.date}"></span></p>
+
+                        <form th:action="@{/event/details/{eventId}(eventId=${event.eventId})}" method="get">
+                            <button type="submit" class="standard-button">Detaljer</button>
+                        </form>
+
+                    </section>
+
+                </section>
+
             </section>
+
         </article>
 
     </main>

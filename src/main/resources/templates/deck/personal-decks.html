@@ -43,17 +43,25 @@
                 <button type="submit" class="standard-button" >Tilføj nyt Deck</button>
             </form>
             <br>
-            <article class="decks-container">
-                <section class="specific-deck-container" th:each="deck : ${decks}">
-                    <p th:text="${deck.deckName}"></p>
-                    <p th:text="${deck.cardAmount}"></p>
-                    <p th:text="${deck.format.displayValue}"></p>
-                    <br>
-                    <form th:action="@{/deck/deck-details/{deckId}(deckId=${deck.deckId})}"  method="get">
-                        <button type="submit" class="standard-button">Detaljer og Rediger</button>
-                    </form>
-                </section>
 
+
+            <article class="deck-container">
+                <section class="deck-grid">
+
+                    <section class="deck-box" th:each="deck : ${decks}">
+
+                        <section class="deck-box-content">
+                            <h3 th:text="${deck.deckName}"></h3>
+                            <p><strong>Kort:</strong> <span th:text="${deck.cardAmount}"></span></p>
+                            <p><strong>Format:</strong> <span th:text="${deck.format.displayValue}"></span></p>
+                            <form th:action="@{/deck/deck-details/{deckId}(deckId=${deck.deckId})}" method="get">
+                                <button type="submit" class="standard-button">Detaljer og Rediger</button>
+                            </form>
+                        </section>
+
+                    </section>
+
+                </section>
             </article>
 
         </article>
