@@ -23,11 +23,15 @@ public class Deck {
         }
         this.userId = userId;
         if (cardAmount < 0){
-            throw new IllegalArgumentException("Et deck kan ikke indeholde negative antal kort");
+            throw new IllegalArgumentException("Et deck kan ikke indeholde et negativt antal kort");
         }
         this.cardAmount = cardAmount;
+
+        final int MAX_DECK_NAME = 100;
         if (deckName == null || deckName.isBlank()){
             throw new IllegalArgumentException("Et deck skal indeholde et navn");
+        } else if (deckName.length() > MAX_DECK_NAME) {
+            throw new IllegalArgumentException("Et decks navn kan maksimalt være " + MAX_DECK_NAME + " tegn langt");
         }
         this.deckName = deckName;
         if (format == null){

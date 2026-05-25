@@ -28,7 +28,7 @@
 <main class="standard-main">
     <article class="standard-main-article">
 
-        <a th:href="@{/deck/deck-details}" class="back-button">Tilbage</a>
+        <a th:href="@{/deck/deck-details/{deckId}(deckId=${deck.deckId})}" class="back-button">Tilbage</a>
 
         <h2>Alle kort</h2>
         <p>Klik på et kort for at se detaljer og tilføj kortet til det valgte deck</p>

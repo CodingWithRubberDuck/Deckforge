@@ -1,6 +1,7 @@
 package com.HolgersDream.Deckforge.domain;
 
 public class User {
+    final int MAX_PASSWORD = 400;
     private int userId;
     private String name;
     private String email;
@@ -15,9 +16,12 @@ public class User {
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt id");
         }
         this.userId = userId;
-
+        
+        final int MAX_NAME = 150;
         if (name == null || name.isBlank()){
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt navn");
+        } else if (name.length() > MAX_NAME) {
+            throw new IllegalArgumentException("Et navn kan maksimalt være " + MAX_NAME + " tegn langt");
         }
         this.name = name.trim();
 
@@ -34,13 +38,18 @@ public class User {
         //Chain constructor kald
         this(userId, name, role);
 
+        final int MAX_EMAIL = 150;
         if (email == null || email.isBlank()){
             throw new IllegalArgumentException("Brugeren har ikke en gyldig email");
+        } else if (email.length() > MAX_EMAIL) {
+            throw new IllegalArgumentException("En email kan maksimalt være " + MAX_EMAIL + " tegn lang");
         }
         this.email = email.trim();
-
+        
         if (password == null || password.isBlank()){
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt kodeord");
+        } else if (password.length() > MAX_PASSWORD) {
+            throw new IllegalArgumentException("Et kodeord kan maksimalt være " + MAX_PASSWORD + " tegn langt");
         }
         this.password = password;
     }
@@ -50,6 +59,8 @@ public class User {
     public void changePassword(String newPassword){
         if (newPassword == null || newPassword.isBlank()){
             throw new IllegalArgumentException();
+        } else if (password.length() > MAX_PASSWORD) {
+            throw new IllegalArgumentException("Et kodeord kan maksimalt være " + MAX_PASSWORD + " tegn langt");
         }
         this.password = newPassword;
     }

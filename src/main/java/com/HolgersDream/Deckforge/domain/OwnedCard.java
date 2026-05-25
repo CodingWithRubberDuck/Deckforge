@@ -17,7 +17,13 @@ public class OwnedCard extends Card {
                      int toughness, int power, Rarity rarity, int ownedCardId, int userId, Condition condition, String foil) {
         super(cardId, blackMana, blueMana, greenMana, redMana, whiteMana,
                 neutralMana, name, superType, type, multiType, subType, canBeCommander, picture, setName, ruleText, toughness, power, rarity);
+        if (userId < 0){
+            throw new IllegalArgumentException("Et eget-kort skal have et gyldigt bruger id");
+        }
         this.userId = userId;
+        if (ownedCardId < 0){
+            throw new IllegalArgumentException("Et eget-kort skal have et gyldigt eget-kort-id");
+        }
         this.ownedCardId = ownedCardId;
         this.condition = condition;
         this.foil = foil;

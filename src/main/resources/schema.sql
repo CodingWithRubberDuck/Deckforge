@@ -9,8 +9,8 @@ DROP TABLE IF EXISTS card_list;
 
 CREATE TABLE user (
                       user_id INT AUTO_INCREMENT PRIMARY KEY,
-                      name VARCHAR(100) NOT NULL,
-                      email VARCHAR(100) NOT NULL UNIQUE,
+                      name VARCHAR(150) NOT NULL,
+                      email VARCHAR(150) NOT NULL UNIQUE,
                       password_hash VARCHAR(400) NOT NULL,
                       role ENUM ('USER', 'ORGANIZER', 'ADMIN') DEFAULT ('USER'),
                       last_logged_in DATE,
@@ -24,7 +24,7 @@ CREATE TABLE event (
                        FOREIGN KEY (owner_id) REFERENCES user(user_id) ON DELETE CASCADE,
                        event_name VARCHAR(200) NOT NULL,
                        max_slots INT NOT NULL,
-                       location VARCHAR(300) NOT NULL,
+                       location VARCHAR(400) NOT NULL,
                        start_time TIME NOT NULL,
                        date DATE NOT NULL
 );
@@ -45,13 +45,13 @@ CREATE TABLE card_list (
                            red_mana INT DEFAULT 0,
                            white_mana INT DEFAULT 0,
                            neutral_mana INT DEFAULT 0,
-                           name VARCHAR(100) NOT NULL,
+                           name VARCHAR(150) NOT NULL,
                            super_type ENUM ('BASIC', 'LEGENDARY') DEFAULT NULL,
                            card_type ENUM ('ARTIFACT', 'CREATURE', 'ENCHANTMENT', 'INSTANT', 'KINDRED', 'LAND', 'SORCERY') NOT NULL,
                            multi_type ENUM ('ARTIFACT', 'CREATURE', 'ENCHANTMENT', 'INSTANT', 'KINDRED', 'LAND', 'SORCERY'),
-                           sub_type VARCHAR(100),
+                           sub_type VARCHAR(150),
                            can_be_commander BOOLEAN DEFAULT false,
-                           picture VARCHAR(100) NOT NULL,
+                           picture VARCHAR(300) NOT NULL,
                            set_name VARCHAR(200) NOT NULL,
                            rule_text VARCHAR(1000),
                            power INT DEFAULT 0,
@@ -106,4 +106,4 @@ CREATE EVENT delete_asked_for_delete
 ON SCHEDULE EVERY 1 MONTH
 DO
 DELETE FROM user
-WHERE date_asked_for_delete < current_date - INTERVAL 2 YEAR;
+WHERE date_asked_for_delete < current_date - INTERVAL 3 YEAR;

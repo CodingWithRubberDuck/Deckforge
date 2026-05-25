@@ -29,8 +29,11 @@ public class Event {
         }
         this.ownerId = ownerId;
 
+        final int MAX_EVENT_NAME = 200;
         if (eventName == null || eventName.isBlank()){
             throw new IllegalArgumentException("Et event skal indeholde et navn");
+        } else if (eventName.length() > MAX_EVENT_NAME) {
+            throw new IllegalArgumentException("Et events navn kan maksimalt være " + MAX_EVENT_NAME + " tegn langt");
         }
         this.eventName = eventName;
 
@@ -44,8 +47,11 @@ public class Event {
         }
         this.availableSlots = availableSlots;
 
+        final int MAX_LOCATION = 400;
         if (location == null || location.isBlank()){
             throw new IllegalArgumentException("Et event skal indeholde en lokation eller adresse");
+        } else if (location.length() > MAX_LOCATION) {
+            throw new IllegalArgumentException("Et events lokation kan maksimalt være " + MAX_LOCATION + " tegn langt");
         }
         this.location = location;
 
