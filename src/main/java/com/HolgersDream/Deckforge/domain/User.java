@@ -12,7 +12,7 @@ public class User {
     //Base Chain Constructor kald
     //Constructor uden password (Skal muligvis bruges i fremtiden til at vise brugere som deltager i et event)
     public User(int userId, String name, Role role){
-        if (userId <= 0){
+        if (userId < 0){
             throw new IllegalArgumentException("Brugeren har ikke et gyldigt id");
         }
         this.userId = userId;

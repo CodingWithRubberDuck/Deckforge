@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ICollectionRepository {
     List<OwnedCard> getUserCardCollection(int userId);
     List<OwnedCard> findOwnedCardByName(int userId, String name);
-    void addCardToCollection (OwnedCard ownedCard);
+    void addCardByIdToCollection(int userId, int cardId);
     Optional<OwnedCard> getOwnedCardById(int ownedCardId);
     void removeOwnedCard(int ownedCardId, int userId);
 }

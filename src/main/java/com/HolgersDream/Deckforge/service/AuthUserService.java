@@ -24,8 +24,8 @@ public class AuthUserService {
     public void checkRegister(AuthRequest authRequest, String repeated){
         User user;
         try {
-            //Indsætter bare placeholder id = 1, da det ikke vil blive brugt alligevel, og null på dateAskedForDelete, da det ikke er sket
-            user = new User(1, authRequest.getName(), authRequest.getEmail(), authRequest.getPassword(), Role.USER);
+            //Indsætter bare placeholder id = 0, da det ikke vil blive brugt alligevel, og null på dateAskedForDelete, da det ikke er sket
+            user = new User(0, authRequest.getName(), authRequest.getEmail(), authRequest.getPassword(), Role.USER);
         } catch (IllegalArgumentException iae){
             throw new RegisterValidationException(iae.getMessage());
         }
@@ -41,9 +41,6 @@ public class AuthUserService {
 
     public AuthSessionUser checkLogin(AuthRequest authRequest){
         User user = repository.findByEmail(authRequest.getEmail()).orElse(null);
-
-
-
         if (user != null && BCrypt.checkpw(authRequest.getPassword(), user.getPassword())){
             repository.updateLastLogin(user.getUserId());
             return new AuthSessionUser(user.getUserId(), user.getName(), user.getEmail(), user.getRole());

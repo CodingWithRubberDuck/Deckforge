@@ -78,11 +78,7 @@ public class CollectionController {
             return "redirect:/authentication/login";
         }
 
-        OwnedCard ownedCard = new OwnedCard();
-        ownedCard.setUserId(currentUser.getUserId());
-        ownedCard.setCardId(cardId);
-
-        service.addCardToCollection(ownedCard);
+        service.addCardToCollection(currentUser.getUserId(), cardId);
 
         return "redirect:/collection/search";
     }

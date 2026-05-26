@@ -29,8 +29,8 @@ public class CollectionService {
         return collectionRepository.findOwnedCardByName(userId, name);
     }
 
-    public void addCardToCollection(OwnedCard ownedCard) {
-        collectionRepository.addCardToCollection(ownedCard);
+    public void addCardToCollection(int userId, int cardId) {
+        collectionRepository.addCardByIdToCollection(userId, cardId);
     }
 
     public List<Card> getAllCards() {

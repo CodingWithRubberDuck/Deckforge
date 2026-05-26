@@ -34,7 +34,7 @@ public class MySQLCollectionRepository implements ICollectionRepository {
         List<OwnedCard> ownedCards = new ArrayList<>();
 
         String sql = """
-                    SELECT owned_card.owned_card_id, card_list.*
+                    SELECT owned_card.owned_card_id, user_id, card_condition, foil, card_list.*
                     FROM owned_card
                     JOIN card_list ON owned_card.card_id = card_list.card_id
                     WHERE owned_card.user_id = ?
@@ -49,12 +49,7 @@ public class MySQLCollectionRepository implements ICollectionRepository {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int ownedCardId = rs.getInt("owned_card_id");
-                String picture = rs.getString("picture");
-
-                OwnedCard card = new OwnedCard(ownedCardId, picture);
-
-                ownedCards.add(card);
+                ownedCards.add(mapOwnedCard(rs));
             }
 
         } catch (SQLException sqle) {
@@ -100,7 +95,7 @@ public class MySQLCollectionRepository implements ICollectionRepository {
     }
 
     @Override
-    public void addCardToCollection(OwnedCard ownedCard) {
+    public void addCardByIdToCollection(int userId, int cardId) {
         String sql = """
                 INSERT INTO owned_card (user_id, card_id)
                 VALUES (?, ?)
@@ -109,8 +104,8 @@ public class MySQLCollectionRepository implements ICollectionRepository {
         try (Connection con = databaseConfig.getConnection();
              PreparedStatement stmt = con.prepareStatement(sql)) {
 
-            stmt.setInt(1, ownedCard.getUserId());
-            stmt.setInt(2, ownedCard.getCardId());
+            stmt.setInt(1, userId);
+            stmt.setInt(2, cardId);
             stmt.executeUpdate();
 
         } catch (SQLException sqle) {
