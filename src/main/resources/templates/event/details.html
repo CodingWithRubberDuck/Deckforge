@@ -53,14 +53,14 @@
         <section th:if="${isParticipating == false and event.availableSlots > 0}">
             <form th:action="@{/event/join}"  method="post">
                 <input type="hidden" name="eventId" th:value="${event.eventId}">
-                <button type="submit" class="standard-button">tilmeld</button>
+                <button type="submit" class="standard-button">Tilmeld</button>
             </form>
         </section>
 
         <section th:if="${isParticipating == true}">
             <form th:action="@{/event/leave}"  method="post">
                 <input type="hidden" name="eventId" th:value="${event.eventId}">
-                <button type="submit" class="standard-button">afmeld</button>
+                <button type="submit" class="standard-button">Afmeld</button>
             </form>
         </section>
         <br>

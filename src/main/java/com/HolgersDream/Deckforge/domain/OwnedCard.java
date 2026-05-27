@@ -29,12 +29,7 @@ public class OwnedCard extends Card {
         this.foil = foil;
     }
 
-    //Constructor til at vise billeder af ejede kort i samling
-    public OwnedCard(int ownedCardId, String picture) {
-        super();
-        this.ownedCardId = ownedCardId;
-        this.setPicture(picture);
-    }
+
 
     /// Getters
     public int getOwnedCardId() {
@@ -60,13 +55,5 @@ public class OwnedCard extends Card {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public void setCondition(Condition condition) {
-        this.condition = condition;
-    }
-
-    public void setFoil(String foil) {
-        this.foil = foil;
     }
 }

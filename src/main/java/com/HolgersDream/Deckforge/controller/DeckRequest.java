@@ -37,16 +37,8 @@ public class DeckRequest {
 
     //Setters
 
-    public void setDeckId(int deckId) {
-        this.deckId = deckId;
-    }
-
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public void setCardAmount(int cardAmount) {
-        this.cardAmount = cardAmount;
     }
 
     public void setDeckName(String deckName) {
@@ -56,4 +48,5 @@ public class DeckRequest {
     public void setFormat(Format format) {
         this.format = format;
     }
+
 }

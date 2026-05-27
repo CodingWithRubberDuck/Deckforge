@@ -200,79 +200,12 @@ public class Card {
     }
 
     /// Setters
-    public void setCardId(int cardId) {
-        this.cardId = cardId;
-    }
-
-    public void setBlackMana(int blackMana) {
-        this.blackMana = blackMana;
-    }
-
-    public void setBlueMana(int blueMana) {
-        this.blueMana = blueMana;
-    }
-
-    public void setGreenMana(int greenMana) {
-        this.greenMana = greenMana;
-    }
-
-    public void setRedMana(int redMana) {
-        this.redMana = redMana;
-    }
-
-    public void setWhiteMana(int whiteMana) {
-        this.whiteMana = whiteMana;
-    }
-
-    public void setNeutralMana(int neutralMana) {
-        this.neutralMana = neutralMana;
-    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setSuperType(SuperType superType) {
-        this.superType = superType;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public void setMultiType(Type multiType) {
-        this.multiType = multiType;
-    }
-
-    public void setSubType(String subType) {
-        this.subType = subType;
-    }
-
-    public void setCanBeCommander(boolean canBeCommander) {
-        this.canBeCommander = canBeCommander;
-    }
-
     public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public void setSetName(String setName) {
-        this.setName = setName;
-    }
-
-    public void setRuleText(String ruleText) {
-        this.ruleText = ruleText;
-    }
-
-    public void setToughness(int toughness) {
-        this.toughness = toughness;
-    }
-
-    public void setPower(int power) {
-        this.power = power;
-    }
-
-    public void setRarity(Rarity rarity) {
-        this.rarity = rarity;
     }
 }
